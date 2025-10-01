@@ -16,14 +16,17 @@ function App() {
               alt: "highlight blog image",
             }}
             blog={{
-              timeline: "Summer, 2025",
+              timeline: "June, 2025",
               heading: "Becoming an open source dweller",
               description: "Well, kind of.",
             }}
           />
           <div className="remainingBlogs">
-            <Link to={``}>
-              <BlogCard name={"Coming Soon"} date={"Summer, 2025"} />
+            <Link to={`/blogs/building-a-file-uploader`}>
+              <BlogCard
+                name={"File Uploader using Cloudinary"}
+                date={"Oct, 2025"}
+              />
             </Link>
           </div>
         </div>

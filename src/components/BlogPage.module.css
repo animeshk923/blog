@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 640px;
+  max-width: 720px;
   margin-top: 1.5rem;
 }
 
@@ -12,7 +12,6 @@ header {
 
 h1 {
   font-size: 2.5rem;
-  /* text-align: center; */
 }
 
 h2 {
@@ -21,16 +20,24 @@ h2 {
 }
 
 ul {
-  /* font-size: 1.rem; */
   line-height: 2rem;
 }
 
 .post {
+  max-width: 720px;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   margin-left: 4rem;
   margin-bottom: 4rem;
+}
+
+.post img {
+  max-width: 100%;
+  height: auto;
+  /* display: block; */
+  /* margin: 1rem auto; */
+  border-radius: 0.5rem; /* optional for rounded corners */
 }
 
 .post a {
@@ -39,8 +46,8 @@ ul {
 }
 
 .post a:hover {
-  color: rgb(253, 163, 52); /* A contrasting orange for hover */
-  /* text-decoration: underline; */
+  color: rgb(253, 163, 52); /* orange for hover */
+  text-decoration: underline;
 }
 .post a:visited {
   color: rgb(180, 180, 80);
@@ -52,7 +59,6 @@ ul {
 
 .post p {
   font-size: 1.15rem;
-  /* font-weight: 300; */
   line-height: 2rem;
   color: rgba(255, 255, 255, 0.87);
 }
@@ -72,8 +78,7 @@ hr {
     max-width: 95vw;
   }
   .post {
-    /* margin-left: 0rem;
-    margin-bottom: 2rem; */
+    margin: 1rem;
   }
 }
 @media (max-width: 600px) {
