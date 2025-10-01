@@ -17,7 +17,12 @@ _"Cloudinary is a cloud-based software-as-a-service (SaaS) platform that provide
 
 ## The Setup
 
-You have to first of all sign-up on their website and create an account which will be used to manage your assets.
-After which, you'll have to login and it will redirect you to your own console which will look something like this:
+- You have to first of all sign-up on their website and create an account.
+
+  Then, you'll have to login and it will redirect you to your own console which will look something like this:
 
 ![Cloudinary Console](../assets/cloudinary-console.png "Cloudinary Console")
+
+Our main focus here would be on the assets tab which can be found on the left-hand side _(marked by red arrow)_ and the assets section _(marked by green arrow)_:
+
+![Assets Section](../assets/assets-sections.png "Assets Section")
