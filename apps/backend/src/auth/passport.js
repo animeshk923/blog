@@ -2,6 +2,10 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("../prisma/generated/prisma");
 const prisma = new PrismaClient();
+const passportJWT = require("passport-jwt");
+const passport = require("passport");
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 const customFields = { usernameField: "email", passwordField: "password" };
 const verifyCallback = async (email, password, done) => {
@@ -33,6 +37,23 @@ const verifyCallback = async (email, password, done) => {
   }
 };
 
-const localStrategyConfig = new LocalStrategy(customFields, verifyCallback);
+passport.use(new LocalStrategy(customFields, verifyCallback));
 
-module.exports = { localStrategyConfig };
+const jwtOptions = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "your_jwt_secret",
+};
+
+const jwtVerifyCallback = async function (jwtPayload, done) {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: jwtPayload.id } });
+    if (!user) {
+      return done(null, false, { message: "User not found!" });
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+};
+
+passport.use(new JWTStrategy(jwtOptions, jwtVerifyCallback));

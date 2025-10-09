@@ -1,6 +1,8 @@
+require("dotenv").config();
+require("./auth/passport");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-
+const passport = require("passport");
 const alphaErr = "must only contain letters.";
 const emailErr = "must be a valid email";
 const passErr = "Password length should be at least 6 characters";
@@ -58,6 +60,46 @@ async function logInGet(req, res) {
   res.render("login", { messages: errorMessage });
 }
 
+async function logInPost(req, res, next) {
+  passport.authenticate(
+    "local",
+    {
+      session: false,
+    },
+    async (err, user) => {
+      if (err || !user) {
+        return res.status(401).json({
+          message: "Something went wrong. See errors for more details",
+          user: user,
+          error: err,
+        });
+      }
+      req.login(user, { session: false }, (err) => {
+        if (err) {
+          console.error("req.login error:", err);
+          res.json({ error: err });
+          // return next(err);
+        }
+        // generate a signed json web token with the contents of user object and return it in the response
+        const payload = { id: user.id, email: user.email };
+        const secret = process.env.JWT_SECRET;
+        const options = { expiresIn: process.env.JWT_EXPIRES_IN };
+
+        try {
+          const token = jwt.sign(payload, secret, options);
+          return res.json({
+            user: { id: user.id, name: user.name, email: user.email },
+            token,
+          });
+        } catch (err) {
+          console.error("JWT sign error:", err);
+          return res.status(500).json({ msg: "Failed to create token" });
+        }
+      });
+    }
+  )(req, res, next);
+}
+
 async function logOutGet(req, res, next) {
   req.logout((err) => {
     if (err) {
@@ -71,4 +113,12 @@ async function handleNonExistentRoutes(req, res) {
   res.status(404).json({ message: "404 NOT FOUND!" });
 }
 
-module.exports = { validateUser, signUpPost, logInGet, logOutGet, handleNonExistentRoutes };
+module.exports = {
+  validateUser,
+  signUpPost,
+  logInGet,
+  logInPost,
+  logOutGet,
+  handleNonExistentRoutes,
+  signUpGet,
+};
