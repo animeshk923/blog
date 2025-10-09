@@ -1,5 +1,4 @@
 const { PrismaClient } = require("./generated/prisma");
-
 const prisma = new PrismaClient();
 
 async function addUser(name, email, password) {
@@ -12,6 +11,4 @@ async function addUser(name, email, password) {
   });
 }
 
-async function addFolder(folderName) {
-  
-}
+async function addFolder(folderName) {}

@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("../prisma/generated/prisma");
 const prisma = new PrismaClient();
 
-const customFields = { usernameField: "email" };
+const customFields = { usernameField: "email", passwordField: "password" };
 const verifyCallback = async (email, password, done) => {
   try {
     const user = await prisma.user.findUnique({
@@ -22,10 +22,12 @@ const verifyCallback = async (email, password, done) => {
 
     if (!match) {
       // passwords do not match!
-      return done(null, false, { message: "Incorrect password" });
+      return done(null, false, {
+        message: "Incorrect email or password, please try again",
+      });
     }
 
-    return done(null, user);
+    return done(null, user, { message: "Logged In Successfully!" });
   } catch (err) {
     return done(err);
   }
