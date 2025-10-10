@@ -11,8 +11,6 @@ async function createUser(name, email, password) {
   });
 }
 
-async function addFolder(folderName) {}
-
 async function getUser(email) {
   return await prisma.user.findUnique({ where: { email: email } });
 }
