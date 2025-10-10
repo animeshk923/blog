@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
+
 const {
   signUpGet,
   signUpPost,

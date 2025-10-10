@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.16.2
- * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+ * Prisma Client JS version: 6.17.0
+ * Query Engine version: c0aafc03b8ef6cdced8654b9a817999e02457d6a
  */
 Prisma.prismaVersion = {
-  client: "6.16.2",
-  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
+  client: "6.17.0",
+  engine: "c0aafc03b8ef6cdced8654b9a817999e02457d6a"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -168,26 +168,25 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
-  "clientVersion": "6.16.2",
-  "engineVersion": "1c57fdcd7e44b29b9313256c76699e91c3ac3c43",
+  "clientVersion": "6.17.0",
+  "engineVersion": "c0aafc03b8ef6cdced8654b9a817999e02457d6a",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "PROD_DATABASE_URL",
+        "fromEnvVar": "LOCAL_DATABASE_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  // url      = env(\"LOCAL_DATABASE_URL\")\n  url      = env(\"PROD_DATABASE_URL\")\n}\n\n/// Blog user model\nmodel User {\n  id       Int     @id @default(autoincrement())\n  fullName String\n  email    String  @unique\n  password String\n  isAdmin  Boolean\n  posts    Post[]\n}\n\nmodel Post {\n  id          Int       @id @default(autoincrement())\n  title       String\n  body        String\n  time        DateTime\n  isPublished Boolean\n  User        User      @relation(fields: [userId], references: [id])\n  userId      Int\n  Comment     Comment[]\n}\n\nmodel Comment {\n  id       Int      @id @default(autoincrement())\n  content  String\n  time     DateTime\n  email    String   @unique\n  username String?  @unique\n  post     Post     @relation(fields: [postId], references: [id])\n  postId   Int\n}\n",
-  "inlineSchemaHash": "088b70576b7457f3c44903e79f6332cfbecb293ee4ed59484dd543699810c378",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"LOCAL_DATABASE_URL\")\n  // url      = env(\"PROD_DATABASE_URL\")\n}\n\n/// Blog user model\nmodel User {\n  id       Int     @id @default(autoincrement())\n  fullName String\n  email    String  @unique\n  password String\n  isAdmin  Boolean @default(false)\n  posts    Post[]\n}\n\nmodel Post {\n  id          Int       @id @default(autoincrement())\n  title       String\n  body        String\n  time        DateTime\n  isPublished Boolean\n  User        User      @relation(fields: [userId], references: [id])\n  userId      Int\n  Comment     Comment[]\n}\n\nmodel Comment {\n  id       Int      @id @default(autoincrement())\n  content  String\n  time     DateTime\n  email    String   @unique\n  username String?  @unique\n  post     Post     @relation(fields: [postId], references: [id])\n  postId   Int\n}\n",
+  "inlineSchemaHash": "b6bd80ee2d2237108220dcdf0d5493572f43c97922205e633d162e1af1229163",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -206,7 +205,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    PROD_DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['PROD_DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.PROD_DATABASE_URL || undefined
+    LOCAL_DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['LOCAL_DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.LOCAL_DATABASE_URL || undefined
   }
 })
 

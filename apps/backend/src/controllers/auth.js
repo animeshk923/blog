@@ -1,8 +1,10 @@
 require("dotenv").config();
-require("./auth/passport");
+require("../auth/passport");
+const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const { createUser, getUser } = require("../prisma/queries");
 const alphaErr = "must only contain letters.";
 const emailErr = "must be a valid email";
 const passErr = "Password length should be at least 6 characters";
@@ -23,7 +25,9 @@ const validateUser = [
     .withMessage(`Admin password is wrong!`),
 ];
 
-async function signUpGet(req, res) {}
+async function signUpGet(req, res) {
+  res.json({ msg: "reached signup page" });
+}
 
 async function signUpPost(req, res, next) {
   // validation check
@@ -38,20 +42,21 @@ async function signUpPost(req, res, next) {
 
   try {
     // handle case where user is already registered so redirect them to login page
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await getUser(email);
 
-    await prisma.user.create({
-      data: {
-        email: email,
-        fullName: fullName,
-        password: hashedPassword,
-      },
-    });
+    if (user) {
+      res.status(400).json({ msg: "User already exists." });
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    res.redirect("/login");
-  } catch (error) {
-    console.error(error);
-    next(error);
+      await createUser(fullName, email, hashedPassword);
+
+      res.status(200).json({ msg: "Sign up success!" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+    // next(error);
   }
 }
 
@@ -86,10 +91,15 @@ async function logInPost(req, res, next) {
         const options = { expiresIn: process.env.JWT_EXPIRES_IN };
 
         try {
-          const token = jwt.sign(payload, secret, options);
-          return res.json({
-            user: { id: user.id, name: user.name, email: user.email },
-            token,
+          jwt.sign(payload, secret, options, (err, token) => {
+            if (err) {
+              console.error("JWT sign error:", err);
+              return res.status(500).json({ msg: "Failed to create token" });
+            }
+            res.json({
+              user: { id: user.id, name: user.name, email: user.email },
+              token: token,
+            });
           });
         } catch (err) {
           console.error("JWT sign error:", err);
@@ -99,6 +109,46 @@ async function logInPost(req, res, next) {
     }
   )(req, res, next);
 }
+
+// async function logInPost(req, res, next) {
+//   passport.authenticate(
+//     "local",
+//     {
+//       session: false,
+//     },
+//     async (err, user) => {
+//       if (err || !user) {
+//         return res.status(401).json({
+//           message: "Something went wrong. See errors for more details",
+//           user: user,
+//           error: err,
+//         });
+//       }
+//       req.login(user, { session: false }, (err) => {
+//         if (err) {
+//           console.error("req.login error:", err);
+//           res.json({ error: err });
+//           // return next(err);
+//         }
+//         // generate a signed json web token with the contents of user object and return it in the response
+//         const payload = { id: user.id, email: user.email };
+//         const secret = process.env.JWT_SECRET;
+//         const options = { expiresIn: process.env.JWT_EXPIRES_IN };
+
+//         try {
+//           const token = jwt.sign(payload, secret, options);
+//           return res.json({
+//             user: { id: user.id, name: user.name, email: user.email },
+//             token,
+//           });
+//         } catch (err) {
+//           console.error("JWT sign error:", err);
+//           return res.status(500).json({ msg: "Failed to create token" });
+//         }
+//       });
+//     }
+//   )(req, res, next);
+// }
 
 async function logOutGet(req, res, next) {
   req.logout((err) => {

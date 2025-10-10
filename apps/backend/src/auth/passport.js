@@ -39,21 +39,21 @@ const verifyCallback = async (email, password, done) => {
 
 passport.use(new LocalStrategy(customFields, verifyCallback));
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "your_jwt_secret",
-};
+// const jwtOptions = {
+//   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+//   secretOrKey: "your_jwt_secret",
+// };
 
-const jwtVerifyCallback = async function (jwtPayload, done) {
-  try {
-    const user = await prisma.user.findUnique({ where: { id: jwtPayload.id } });
-    if (!user) {
-      return done(null, false, { message: "User not found!" });
-    }
-    return done(null, user);
-  } catch (err) {
-    return done(err);
-  }
-};
+// const jwtVerifyCallback = async function (jwtPayload, done) {
+//   try {
+//     const user = await prisma.user.findUnique({ where: { id: jwtPayload.id } });
+//     if (!user) {
+//       return done(null, false, { message: "User not found!" });
+//     }
+//     return done(null, user);
+//   } catch (err) {
+//     return done(err);
+//   }
+// };
 
-passport.use(new JWTStrategy(jwtOptions, jwtVerifyCallback));
+// passport.use(new JWTStrategy(jwtOptions, jwtVerifyCallback));

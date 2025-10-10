@@ -1,7 +1,7 @@
 const { PrismaClient } = require("./generated/prisma");
 const prisma = new PrismaClient();
 
-async function addUser(name, email, password) {
+async function createUser(name, email, password) {
   await prisma.user.create({
     data: {
       email: email,
@@ -12,3 +12,8 @@ async function addUser(name, email, password) {
 }
 
 async function addFolder(folderName) {}
+
+async function getUser(email) {
+  return await prisma.user.findUnique({ where: { email: email } });
+}
+module.exports = { createUser, getUser };

@@ -234,8 +234,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.2
-   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+   * Prisma Client JS version: 6.17.0
+   * Query Engine version: c0aafc03b8ef6cdced8654b9a817999e02457d6a
    */
   export type PrismaVersion = {
     client: string
@@ -4787,7 +4787,7 @@ export namespace Prisma {
     fullName: string
     email: string
     password: string
-    isAdmin: boolean
+    isAdmin?: boolean
     posts?: PostCreateNestedManyWithoutUserInput
   }
 
@@ -4796,7 +4796,7 @@ export namespace Prisma {
     fullName: string
     email: string
     password: string
-    isAdmin: boolean
+    isAdmin?: boolean
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -4822,7 +4822,7 @@ export namespace Prisma {
     fullName: string
     email: string
     password: string
-    isAdmin: boolean
+    isAdmin?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -5578,7 +5578,7 @@ export namespace Prisma {
     fullName: string
     email: string
     password: string
-    isAdmin: boolean
+    isAdmin?: boolean
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -5586,7 +5586,7 @@ export namespace Prisma {
     fullName: string
     email: string
     password: string
-    isAdmin: boolean
+    isAdmin?: boolean
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
