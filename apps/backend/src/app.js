@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ msg: "hello from root!" });
 });
-app.use("/blogs", routes.blogs);
+app.use("/blog", routes.blog);
 app.use("/auth", routes.auth);
 app.get("/{*splat}", handleNonExistentRoutes);
 app.listen(3000, () => console.log("app listening on port 3000!"));

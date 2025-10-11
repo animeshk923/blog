@@ -96,7 +96,7 @@ async function logInPost(req, res, next) {
               console.error("JWT sign error:", err);
               return res.status(500).json({ msg: "Failed to create token" });
             }
-            res.json({
+            res.status(200).json({
               user: { id: user.id, name: user.name, email: user.email },
               token: token,
             });
@@ -110,6 +110,34 @@ async function logInPost(req, res, next) {
   )(req, res, next);
 }
 
+// FORMAT OF TOKEN
+// Authorization: Bearer <access_token>
+
+// Verify Token
+async function verifyToken(req, res, next) {
+  // Get auth header value
+  console.log('enter verifYToken block');
+  
+  const bearerHeader = req.headers["authorization"];
+  // Check if bearer is undefined
+  if (typeof bearerHeader !== "undefined") {
+    // Split at the space
+    const bearer = bearerHeader.split(" ");
+    // Get token from array
+    const bearerToken = bearer[1];
+    // Set the token
+    req.token = bearerToken;
+    console.log(bearerToken);
+    
+    // Next middleware
+    next();
+  } else {
+    // Forbidden
+    console.log('403 verifyToken error');
+    res.status(403).send({message: 'forbidden'});
+  }
+}
+
 async function logOutGet(req, res, next) {
   req.logout((err) => {
     if (err) {
@@ -118,7 +146,11 @@ async function logOutGet(req, res, next) {
     res.redirect("/");
   });
 }
-
+/**
+ * Handle non existent routes
+ * @param {Object} req
+ * @param {Object} res
+ */
 async function handleNonExistentRoutes(req, res) {
   res.status(404).json({ message: "404 NOT FOUND!" });
 }
@@ -128,6 +160,7 @@ module.exports = {
   signUpPost,
   logInGet,
   logInPost,
+  verifyToken,
   logOutGet,
   handleNonExistentRoutes,
   signUpGet,

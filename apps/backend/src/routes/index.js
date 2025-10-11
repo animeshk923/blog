@@ -1,4 +1,4 @@
-const blogs = require("./blogs");
+const blog = require("./blog");
 const auth = require("./auth");
 
-module.exports = { blogs, auth };
+module.exports = { blog, auth };
