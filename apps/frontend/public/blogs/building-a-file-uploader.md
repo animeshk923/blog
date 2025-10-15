@@ -32,4 +32,5 @@ _"Cloudinary is a cloud-based software-as-a-service (SaaS) platform that provide
   ![Assets Section](../assets/assets-sections.png "Assets Section")
 
 - Next, we have to configure the API credentials required to connect to our account. We have 2 ways to do that:
-  - 
+  - lop
+  - pol

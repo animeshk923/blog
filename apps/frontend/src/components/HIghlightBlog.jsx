@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./HighlightBlog.module.css";
+import styles from "../styles/HighlightBlog.module.css";
 
 export default function HighlightBlog({image, blog}) {
   return (

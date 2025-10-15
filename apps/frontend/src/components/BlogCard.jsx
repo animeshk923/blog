@@ -1,4 +1,4 @@
-import styles from "./BlogCard.module.css";
+import styles from "../styles/BlogCard.module.css";
 
 export default function BlogCard({ name, date }) {
   return (

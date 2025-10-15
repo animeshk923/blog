@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import Header from "./Header";
-import styles from "./BlogPage.module.css";
+import styles from "../styles/BlogPage.module.css";
 
 // title, date, coverImg, <-- props that can be used in future
 export default function BlogPage({ blogPath }) {
