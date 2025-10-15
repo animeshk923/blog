@@ -25,9 +25,9 @@ const validateUser = [
     .withMessage(`Admin password is wrong!`),
 ];
 
-async function signUpGet(req, res) {
-  res.json({ msg: "reached signup page" });
-}
+// async function signUpGet(req, res) {
+//   res.json({ msg: "reached signup page" });
+// }
 
 async function signUpPost(req, res, next) {
   // validation check
@@ -38,18 +38,25 @@ async function signUpPost(req, res, next) {
     });
   }
 
-  const { fullName, email, password } = req.body;
+  const { fullName, email, password, adminPass } = req.body;
+  let isAdmin = false;
 
   try {
     // handle case where user is already registered so redirect them to login page
     const user = await getUser(email);
+
+    if (adminPass === process.env.ADMIN_PASS) {
+      isAdmin = true;
+    } else {
+      isAdmin = false;
+    }
 
     if (user) {
       res.status(400).json({ msg: "User already exists." });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await createUser(fullName, email, hashedPassword);
+      await createUser(fullName, email, hashedPassword, isAdmin);
 
       res.status(200).json({ msg: "Sign up success!" });
     }
@@ -60,10 +67,10 @@ async function signUpPost(req, res, next) {
   }
 }
 
-async function logInGet(req, res) {
-  const errorMessage = req.session.messages;
-  res.render("login", { messages: errorMessage });
-}
+// async function logInGet(req, res) {
+//   const errorMessage = req.session.messages;
+//   res.render("login", { messages: errorMessage });
+// }
 
 async function logInPost(req, res, next) {
   passport.authenticate(
@@ -116,8 +123,8 @@ async function logInPost(req, res, next) {
 // Verify Token
 async function verifyToken(req, res, next) {
   // Get auth header value
-  console.log('enter verifYToken block');
-  
+  console.log("enter verifYToken block");
+
   const bearerHeader = req.headers["authorization"];
   // Check if bearer is undefined
   if (typeof bearerHeader !== "undefined") {
@@ -128,13 +135,13 @@ async function verifyToken(req, res, next) {
     // Set the token
     req.token = bearerToken;
     console.log(bearerToken);
-    
+
     // Next middleware
     next();
   } else {
     // Forbidden
-    console.log('403 verifyToken error');
-    res.status(403).send({message: 'forbidden'});
+    console.log("403 verifyToken error");
+    res.status(403).send({ message: "forbidden" });
   }
 }
 
@@ -158,10 +165,10 @@ async function handleNonExistentRoutes(req, res) {
 module.exports = {
   validateUser,
   signUpPost,
-  logInGet,
+  // logInGet,
   logInPost,
   verifyToken,
   logOutGet,
   handleNonExistentRoutes,
-  signUpGet,
+  // signUpGet,
 };

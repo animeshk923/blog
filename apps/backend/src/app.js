@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 // const { localStrategyConfig } = require("./auth/passport");
 const routes = require("./routes");
 const { handleNonExistentRoutes } = require("./controllers/auth");
@@ -8,7 +9,8 @@ const { handleNonExistentRoutes } = require("./controllers/auth");
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors());
+app.use(express.json());
 // app.use(passport.session());
 
 // passport.use(localStrategyConfig);

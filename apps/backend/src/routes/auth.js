@@ -10,9 +10,9 @@ const {
   logInPost,
 } = require("../controllers/auth");
 
-router.get("/signup", signUpGet);
+// router.get("/signup", signUpGet);
 router.post("/signup", signUpPost);
-router.get("/login", logInGet);
+// router.get("/login", logInGet);
 router.post("/login", logInPost);
 router.get(
   "/logout",
