@@ -3,48 +3,33 @@ import { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
-const apiUrl = "http://localhost:3000";
-axios.interceptors.request.use(
-  (config) => {
-    const { origin } = new URL(config.url);
-    const allowedOrigins = [apiUrl];
-    const token = localStorage.getItem("token");
-    if (allowedOrigins.includes(origin)) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 export default function Login() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fetchError, setFetchError] = useState(null);
-
-  const getJwt = async () => {
-    const { data } = await axios.post(`${apiUrl}/auth/login`);
-    console.log(data);
-    localStorage.setItem("token", data.token);
-    // setJwt(data.token);
-  };
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiUrl}/auth/login`, {
+      const response = await axios.post(`http://localhost:3000/auth/login`, {
         email,
         password,
       });
-      setUser(response.data);
-      getJwt(); // get and store jwt in localstorage
+
+      const token = response?.data?.token;
+      const user = response?.data?.user;
+
+      if (token) {
+        localStorage.setItem("token", response.data.token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      }
+
+      if (user) setUser(response.data);
+
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log("login error:", error);
     }
   };
 
