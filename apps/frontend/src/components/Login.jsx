@@ -1,34 +1,48 @@
 import axios from "axios";
 import { useState } from "react";
 import "./Login.css";
-export default function Login() {
-  const apiUrl = "http://localhost:3000";
-  axios.interceptors.request.use(
-    (config) => {
-      const { origin } = new URL(config.url);
-      const allowedOrigins = [apiUrl];
-      const token = localStorage.getItem("token");
-      if (allowedOrigins.includes(origin)) {
-        config.headers.authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+import { useNavigate } from "react-router-dom";
 
+const apiUrl = "http://localhost:3000";
+axios.interceptors.request.use(
+  (config) => {
+    const { origin } = new URL(config.url);
+    const allowedOrigins = [apiUrl];
+    const token = localStorage.getItem("token");
+    if (allowedOrigins.includes(origin)) {
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export default function Login() {
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fetchError, setFetchError] = useState(null);
+
+  const getJwt = async () => {
+    const { data } = await axios.post(`${apiUrl}/auth/login`);
+    console.log(data);
+    localStorage.setItem("token", data.token);
+    // setJwt(data.token);
+  };
+
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
-        username,
+      const response = await axios.post(`${apiUrl}/auth/login`, {
+        email,
         password,
       });
       setUser(response.data);
+      getJwt(); // get and store jwt in localstorage
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -41,11 +55,11 @@ export default function Login() {
       ) : (
         <div className="login">
           <form onSubmit={handleSubmit}>
-            <span className="formTitle">Lama Login</span>
+            <span className="formTitle">Login</span>
             <input
-              type="text"
-              placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              placeholder="abc@example.com"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="password"

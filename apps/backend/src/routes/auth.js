@@ -16,7 +16,7 @@ router.post("/signup", signUpPost);
 router.post("/login", logInPost);
 router.get(
   "/logout",
-  passport.authenticate("jwt", { session: false }),
+  // TODO: implement to check whether user is present to logout and what to do when user is not present
   logOutGet
 );
 
