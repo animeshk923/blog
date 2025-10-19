@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import axiosInstance from "../api/axios";
+import { useEffect, useState } from "react";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [user, setUser] = useState(null);
@@ -32,12 +33,46 @@ export default function Login() {
     }
   };
 
+  async function fetchCurrentUser() {
+    try {
+      // use GET if you change backend to GET; otherwise use POST
+      const res = await axiosInstance.get("/auth/me");
+      return res.data || null;
+    } catch (err) {
+      // token invalid/expired -> treat as not logged in
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
+    }
+
+    fetchCurrentUser().then((u) => {
+      if (u) setUser(u);
+      else {
+        localStorage.removeItem("token");
+        delete axiosInstance.defaults.headers.common["Authorization"];
+      }
+    });
+  }, []);
+
   return (
     <div className="container">
       {console.log(user)}
 
       {user ? (
-        <span>User has been loggedIn </span>
+        <>
+          <span>Already Logged in </span>
+          <br />
+          <br />
+          <Link to={`/`}>Go to blogs</Link>
+        </>
       ) : (
         <div className="login">
           <form onSubmit={handleSubmit}>
