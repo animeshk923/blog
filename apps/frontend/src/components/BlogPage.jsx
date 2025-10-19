@@ -11,12 +11,12 @@ export default function BlogPage({ blogPath }) {
     fetch(blogPath)
       .then((res) => res.text())
       .then((text) => setMdContent(text));
-  });
+  }, []);
   return (
     <>
       <div className={styles.container}>
         <Header />
-        <hr className={styles.hr}/>
+        <hr className={styles.hr} />
         <div className={styles.post}>
           <Markdown>{mdContent}</Markdown>
         </div>

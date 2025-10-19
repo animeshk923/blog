@@ -1,11 +1,27 @@
+/* TODO: change highlightBlog name to blogCard or similar and remove the earlier stylings for individual cards */
+
+/* comment out and try different styles if you feel like it */
 .highlightBlog {
-  max-width: 50rem;
+  max-width: 60rem;
   display: flex;
   gap: 1rem;
+  border-radius: 15px;
+  border-color: red;
+  /* text-align: center; */
+  background: linear-gradient(90deg, #fff27e 0%, #003438 90%);
+  /* box-shadow: 0 4px 24px #fffd6c, 2px 2.5px 20px rgb(10, 190, 34); */
+  /* transition: transform 0.2s ease-out, box-shadow 0.3s; */
+  /* padding: 1.5rem 1rem; */
 }
 
-.highlightBlog  img {
-  border-radius: 20px;
+.highlightBlog:hover {
+  transform: translateY(-6px);
+  /* box-shadow: 0 8px 32px rgba(114, 225, 253, 0.966), 0 2px 8px rgb(85, 250, 63); */
+  /* border-color: #ffec80; */
+}
+
+.highlightBlog img {
+  border-radius: 15px;
 }
 
 .info {
@@ -25,11 +41,13 @@
   border-radius: 20px;
 }
 
+/* TODO: adjust styles for responsive designs */
 @media (max-width: 900px) {
   .highlightBlog {
     flex-direction: column;
     align-items: center;
     max-width: 100%;
+    background: linear-gradient(180deg, #fff27e 0%, #003438 90%);
   }
   .highlightBlog > img {
     width: 100%;
@@ -37,6 +55,7 @@
     height: auto;
   }
 }
+/* TODO: adjust styles for responsive designs */
 @media (max-width: 600px) {
   .highlightBlog > img {
     max-width: 100%;

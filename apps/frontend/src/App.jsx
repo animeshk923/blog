@@ -21,14 +21,14 @@ function App() {
               description: "Well, kind of.",
             }}
           />
-          <div className="remainingBlogs">
+          {/* <div className="remainingBlogs">
             <Link to={`/blogs/building-a-file-uploader`}>
               <BlogCard
                 name={"File Uploader using Cloudinary"}
                 date={"Oct, 2025"}
               />
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
