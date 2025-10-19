@@ -134,10 +134,16 @@ async function verifyToken(req, res, next) {
     const bearerToken = bearer[1];
     // Set the token
     req.token = bearerToken;
-    console.log(bearerToken);
 
-    // Next middleware
-    next();
+    jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(403);
+      } else {
+        req.authData = authData;
+        next();
+      }
+    });
   } else {
     // Forbidden
     console.log("403 verifyToken error");
@@ -145,15 +151,22 @@ async function verifyToken(req, res, next) {
   }
 }
 
-function verifyJwt(req, res, next) {
-  jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
-    if (err) {
-      res.sendStatus(403);
-    } else {
-      req.authData = authData;
-      next();
-    }
-  });
+async function verifyUser(req, res) {
+  try {
+    const user = await getUser(req.authData.email);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({
+      msg: "User verified!",
+      name: user.fullName,
+      email: user.email,
+      "Admin Status": user.isAdmin,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 }
 
 async function logOutGet(req, res, next) {
@@ -179,8 +192,9 @@ module.exports = {
   // logInGet,
   logInPost,
   verifyToken,
-  verifyJwt,
+  // verifyJwt,
   logOutGet,
   handleNonExistentRoutes,
+  verifyUser,
   // signUpGet,
 };
