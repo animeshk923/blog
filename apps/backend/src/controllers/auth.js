@@ -141,8 +141,19 @@ async function verifyToken(req, res, next) {
   } else {
     // Forbidden
     console.log("403 verifyToken error");
-    res.status(403).send({ message: "forbidden" });
+    res.status(403).send({ message: "access denied" });
   }
+}
+
+function verifyJwt(req, res, next) {
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      req.authData = authData;
+      next();
+    }
+  });
 }
 
 async function logOutGet(req, res, next) {
@@ -168,6 +179,7 @@ module.exports = {
   // logInGet,
   logInPost,
   verifyToken,
+  verifyJwt,
   logOutGet,
   handleNonExistentRoutes,
   // signUpGet,

@@ -22,7 +22,6 @@ export default function Login() {
 
       if (token) {
         localStorage.setItem("token", response.data.token);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
 
       if (user) setUser(response.data);
@@ -35,6 +34,8 @@ export default function Login() {
 
   return (
     <div className="container">
+      {console.log(user)}
+
       {user ? (
         <span>User has been loggedIn </span>
       ) : (
