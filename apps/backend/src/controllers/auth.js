@@ -25,10 +25,6 @@ const validateUser = [
     .withMessage(`Admin password is wrong!`),
 ];
 
-// async function signUpGet(req, res) {
-//   res.json({ msg: "reached signup page" });
-// }
-
 async function signUpPost(req, res, next) {
   // validation check
   const errors = validationResult(req);
@@ -52,7 +48,7 @@ async function signUpPost(req, res, next) {
     }
 
     if (user) {
-      res.status(400).json({ msg: "User already exists." });
+      res.status(405).json({ msg: "User already exists." });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -66,11 +62,6 @@ async function signUpPost(req, res, next) {
     // next(error);
   }
 }
-
-// async function logInGet(req, res) {
-//   const errorMessage = req.session.messages;
-//   res.render("login", { messages: errorMessage });
-// }
 
 async function logInPost(req, res, next) {
   passport.authenticate(
@@ -189,12 +180,9 @@ async function handleNonExistentRoutes(req, res) {
 module.exports = {
   validateUser,
   signUpPost,
-  // logInGet,
   logInPost,
   verifyToken,
-  // verifyJwt,
   logOutGet,
   handleNonExistentRoutes,
   verifyUser,
-  // signUpGet,
 };

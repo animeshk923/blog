@@ -68,6 +68,8 @@ export default function Login() {
 
       {user ? (
         <>
+          <br />
+          <br />
           <span>Already Logged in </span>
           <br />
           <br />

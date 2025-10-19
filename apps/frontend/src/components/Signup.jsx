@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Signup() {
-  const [user, setUser] = useState(null);
+  const [userExists, setUserExists] = useState(false);
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,25 +13,33 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/auth/signup", {
+      await axios.post("http://localhost:3000/auth/signup", {
         fullName,
         email,
         password,
         adminPass,
       });
-      if (response.status === 200) {
-        setUser(response.data);
-        navigate("/login");
-      }
+      navigate("/login");
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 405) {
+        setUserExists(true);
+      } else {
+        console.log("Something went wrong:", error);
+      }
     }
   };
 
   return (
     <div className="container">
-      {user ? (
-        <span>User already exists!</span>
+      {userExists ? (
+        <>
+          <br />
+          <br />
+          <span>User already exists!</span>
+          <br />
+          <br />
+          <Link to={`/login`}>Go to login</Link>
+        </>
       ) : (
         <div className="login">
           <form onSubmit={handleSubmit}>
