@@ -10,6 +10,7 @@ function App() {
         <div className="content">
           <HighlightBlog
             image={{
+              // TODO: make js file with blog component info as object collection and import here
               src: "/assets/dark-laptop.jpg",
               alt: "highlight blog image",
             }}

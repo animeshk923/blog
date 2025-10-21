@@ -8,7 +8,7 @@ export default function HighlightBlog({ image, blog }) {
         <img src={image.src} alt={image.alt} className={styles.img} />
         <div className={styles.info}>
           <p>{blog.timeline}</p>
-          <h1>{blog.heading}</h1>
+          <h1 className={styles.h1}>{blog.heading}</h1>
           <p className={styles.p}>{blog.description}</p>
         </div>
       </Link>

@@ -11,7 +11,7 @@ export default function Header() {
     <header className={styles.header}>
       <Link to="/">Animesh's Blog</Link>
       <Link to="/about">About</Link>
-      {!isAdmin && (<Link to="/login">Admin Log in</Link>)}
+      {!isAdmin && (<Link to="/login">Admin log in</Link>)}
       {isAdmin && (
         <div className={styles.admin}>
           <label htmlFor="action" className={styles.label}>
