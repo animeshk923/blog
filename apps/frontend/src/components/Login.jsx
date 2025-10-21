@@ -82,6 +82,7 @@ export default function Login() {
         </>
       ) : (
         <>
+        {/* add error message display properly, not rendering as of now */}
           <h3>{loginError}</h3>
           <div className="login">
             <form onSubmit={handleSubmit}>
