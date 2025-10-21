@@ -72,7 +72,7 @@ async function logInPost(req, res, next) {
     async (err, user) => {
       if (err || !user) {
         return res.status(401).json({
-          message: "Something went wrong. See errors for more details",
+          msg: "Wrong email or password! Please try again.",
           user: user,
           error: err,
         });

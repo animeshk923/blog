@@ -29,8 +29,9 @@ export default function Login() {
       if (user) setUser(response.data);
       navigate("/");
       window.location.reload();
-    } catch (error) {
-      console.log("login error:", error);
+    } catch (err) {
+      setLoginError(err.response.data.msg);
+      console.log("login error:", err);
     }
   };
 
@@ -82,7 +83,7 @@ export default function Login() {
         </>
       ) : (
         <>
-        {/* add error message display properly, not rendering as of now */}
+          {/* add error message display properly, not rendering as of now */}
           <h3>{loginError}</h3>
           <div className="login">
             <form onSubmit={handleSubmit}>

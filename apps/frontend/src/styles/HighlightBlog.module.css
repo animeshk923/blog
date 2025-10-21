@@ -2,7 +2,7 @@
 
 /* comment out and try different styles if you feel like it */
 .highlightBlog {
-  max-width: 60rem;
+  min-width: 55rem;
   display: flex;
   gap: 1rem;
   border-radius: 1rem;
