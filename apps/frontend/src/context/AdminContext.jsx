@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import axiosInstance from "../api/axios";
+import axiosInstance, { apiUrl } from "../api/axios";
 axiosInstance;
 
 export const AdminContext = createContext(null);
@@ -12,7 +12,7 @@ export const AdminProvider = ({ children }) => {
   useEffect(() => {
     const checkAdmin = async () => {
       try {
-        const res = await axiosInstance.get("http://localhost:3000/auth/me");
+        const res = await axiosInstance.get(`${apiUrl}/auth/me`);
 
         console.log(res);
 
@@ -24,7 +24,7 @@ export const AdminProvider = ({ children }) => {
       } catch (err) {
         console.log(err);
         console.log(err.response.data.msg);
-        setErrorMessage(err.response.data.msg)
+        setErrorMessage(err.response.data.msg);
         setIsAdmin(false);
       } finally {
         setLoading(false);

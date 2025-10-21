@@ -27,8 +27,8 @@ export default function Login() {
       }
 
       if (user) setUser(response.data);
-
       navigate("/");
+      window.location.reload();
     } catch (error) {
       console.log("login error:", error);
     }
