@@ -7,6 +7,7 @@ import About from "./components/About.jsx";
 import BlogPageWrapper from "./components/BlogPageWrapper.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
+import { AdminProvider } from "./context/AdminContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AdminProvider>
+      <RouterProvider router={router} />
+    </AdminProvider>
   </StrictMode>
 );

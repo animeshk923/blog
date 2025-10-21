@@ -5,7 +5,7 @@ import styles from "../styles/BlogPage.module.css";
 
 // title, date, coverImg, <-- props that can be used in future
 export default function BlogPage({ blogPath }) {
-  const [mdContent, setMdContent] = useState("");
+  const [mdContent, setMdContent] = useState(null);
 
   useEffect(() => {
     fetch(blogPath)
@@ -18,7 +18,7 @@ export default function BlogPage({ blogPath }) {
         <Header />
         <hr className={styles.hr} />
         <div className={styles.post}>
-          <Markdown>{mdContent}</Markdown>
+          <Markdown>{mdContent}</Markdown>Header
         </div>
       </div>
     </>
