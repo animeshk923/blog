@@ -9,7 +9,7 @@ const {
   getDraftBlog,
   convertToDraft,
 } = require("../controllers/blog");
-const { verifyToken, verifyJwt } = require("../controllers/auth");
+const { verifyToken } = require("../controllers/auth");
 
 // blog root function where if visited, user will get a unordered list of blogs sorted from most recent to least recent
 router.get("/", getAllBlogs);

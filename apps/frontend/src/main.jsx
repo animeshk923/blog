@@ -8,6 +8,7 @@ import BlogPageWrapper from "./components/BlogPageWrapper.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
+import NewBlog from "./components/NewBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/blog/create",
+    element: <NewBlog />,
   },
 ]);
 
