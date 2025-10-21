@@ -8,6 +8,7 @@ export default function Login() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(null);
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -37,8 +38,12 @@ export default function Login() {
     try {
       // use GET if you change backend to GET; otherwise use POST
       const res = await axiosInstance.get("/auth/me");
+
       return res.data || null;
     } catch (err) {
+      console.log(err);
+      console.log(err.response.data.msg);
+      setLoginError(err.response.data.msg);
       // token invalid/expired -> treat as not logged in
       return null;
     }
@@ -64,7 +69,7 @@ export default function Login() {
 
   return (
     <div className="container">
-      {console.log(user)}
+      {/* {console.log(user)} */}
 
       {user ? (
         <>
@@ -76,24 +81,27 @@ export default function Login() {
           <Link to={`/`}>Go to blogs</Link>
         </>
       ) : (
-        <div className="login">
-          <form onSubmit={handleSubmit}>
-            <span className="formTitle">Login</span>
-            <input
-              type="email"
-              placeholder="abc@example.com"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit" className="submitButton">
-              Login
-            </button>
-          </form>
-        </div>
+        <>
+          <h3>{loginError}</h3>
+          <div className="login">
+            <form onSubmit={handleSubmit}>
+              <span className="formTitle">Login</span>
+              <input
+                type="email"
+                placeholder="abc@example.com"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button type="submit" className="submitButton">
+                Login
+              </button>
+            </form>
+          </div>
+        </>
       )}
     </div>
   );

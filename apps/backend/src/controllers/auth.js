@@ -114,7 +114,7 @@ async function logInPost(req, res, next) {
 // Verify Token
 async function verifyToken(req, res, next) {
   // Get auth header value
-  console.log("enter verifYToken block");
+  console.log("enter verifyToken block");
 
   const bearerHeader = req.headers["authorization"];
   // Check if bearer is undefined
@@ -124,12 +124,12 @@ async function verifyToken(req, res, next) {
     // Get token from array
     const bearerToken = bearer[1];
     // Set the token
-    req.token = bearerToken;
+    // req.token = bearerToken;
 
     jwt.verify(bearerToken, process.env.JWT_SECRET, (err, authData) => {
       if (err) {
         console.log(err);
-        res.sendStatus(403);
+        res.status(403).json({ msg: "Token expired. Please log in again." });
       } else {
         req.authData = authData;
         next();
@@ -138,7 +138,9 @@ async function verifyToken(req, res, next) {
   } else {
     // Forbidden
     console.log("403 verifyToken error");
-    res.status(403).send({ message: "access denied" });
+    res
+      .status(403)
+      .json({ msg: "Either token not found or expired. Please log in again." });
   }
 }
 

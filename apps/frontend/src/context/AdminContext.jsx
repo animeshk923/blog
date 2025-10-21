@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import axiosInstance from "../api/axios";
 axiosInstance;
 
@@ -7,19 +7,24 @@ export const AdminContext = createContext(null);
 export const AdminProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     const checkAdmin = async () => {
       try {
         const res = await axiosInstance.get("http://localhost:3000/auth/me");
-        // console.log(res);
-        
+
+        console.log(res);
+
         if (res.data["Admin Status"]) {
           setIsAdmin(true);
         } else {
           setIsAdmin(false);
         }
       } catch (err) {
+        console.log(err);
+        console.log(err.response.data.msg);
+        setErrorMessage(err.response.data.msg)
         setIsAdmin(false);
       } finally {
         setLoading(false);
@@ -29,8 +34,12 @@ export const AdminProvider = ({ children }) => {
   }, []);
 
   return (
-    <AdminContext.Provider value={{ isAdmin, loading }}>
+    <AdminContext.Provider value={{ isAdmin, loading, errorMessage }}>
       {children}
     </AdminContext.Provider>
   );
+};
+
+export const useAdmin = () => {
+  return useContext(AdminContext);
 };
