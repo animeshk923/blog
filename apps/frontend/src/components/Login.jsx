@@ -37,9 +37,7 @@ export default function Login() {
 
   async function fetchCurrentUser() {
     try {
-      // use GET if you change backend to GET; otherwise use POST
       const res = await axiosInstance.get("/auth/me");
-
       return res.data || null;
     } catch (err) {
       console.log(err);

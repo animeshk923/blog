@@ -9,6 +9,7 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
 import NewBlog from "./components/NewBlog.jsx";
+import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/about",
+    path: "about",
     element: <About />,
   },
   {
@@ -24,16 +25,22 @@ const router = createBrowserRouter([
     element: <BlogPageWrapper />,
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login />,
   },
   {
-    path: "/signup",
+    path: "signup",
     element: <Signup />,
   },
   {
-    path: "/blog/create",
-    element: <NewBlog />,
+    path: "blog",
+    element: <ProtectedRoutes />,
+    children: [
+      {
+        path: "create",
+        element: <NewBlog />,
+      },
+    ],
   },
 ]);
 

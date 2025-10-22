@@ -8,15 +8,21 @@ export default function TextEditor() {
       console.log(editorRef.current.getContent());
     }
   };
-  const [content, setContent] = useState("");
+
+  async function handlePublish() {
+    const html = editorRef.current.getContent();
+  }
+
+  async function handleDraft() {
+    const html = editorRef.current.getContent();
+  }
+
   return (
     <>
       <Editor
         apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue="<p>START BLOGGING!.</p>"
-        value={content}
-        onEditorChange={(newValue) => setContent(newValue)}
         init={{
           height: 500,
           menubar: false,
@@ -49,7 +55,9 @@ export default function TextEditor() {
             "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
         }}
       />
-      <button onClick={log}>Log editor content</button>
+      {/** TODO: complete both implementation */}
+      <button onClick={handlePublish}>Publish</button>
+      <button onClick={handleDraft}>Save as draft</button>
     </>
   );
 }
