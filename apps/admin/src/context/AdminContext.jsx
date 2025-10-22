@@ -14,7 +14,7 @@ export const AdminProvider = ({ children }) => {
       try {
         const res = await axiosInstance.get(`${apiUrl}/auth/me`);
 
-        console.log(res);
+        // console.log(res);
 
         if (res.data["Admin Status"]) {
           setIsAdmin(true);

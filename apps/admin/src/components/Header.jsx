@@ -4,6 +4,7 @@ import axiosInstance from "../api/axios";
 import styles from "../styles/Header.module.css";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+import SignupButton from "./SignupButton";
 
 export default function Header() {
   const { isAdmin, loading } = useAdmin();
@@ -18,6 +19,10 @@ export default function Header() {
   const handleLogin = () => {
     navigate("/login");
   };
+
+  const handleSignup = () => {
+    navigate("/signup");
+  };
   return (
     <header className={styles.header}>
       <Link to="/">Admin Home</Link>
@@ -28,15 +33,18 @@ export default function Header() {
           <div className={styles.dropdown}>
             <button className={styles.select}>Menu</button>
             <div className={styles.dropdownMenu}>
-              <Link to={`/blog/create`}>New Blog</Link>
-              <Link to={`/blog/edit`}>Edit</Link>
-              <Link to={`/blog/drafts`}>Draft</Link>
+              <Link to={`blog/create`}>New Blog</Link>
+              <Link to={`blog/edit`}>Edit</Link>
+              <Link to={`blog/drafts`}>Draft</Link>
             </div>
           </div>
           <LogoutButton onClick={handleLogout} />
         </>
       ) : (
-        <LoginButton onClick={handleLogin} />
+        <>
+          <SignupButton onClick={handleSignup} />
+          <LoginButton onClick={handleLogin} />
+        </>
       )}
     </header>
   );
