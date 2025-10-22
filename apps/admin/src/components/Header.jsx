@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAdmin } from "../context/AdminContext";
-import axiosInstance from "../api/axios";
+import axiosInstance, { apiUrl } from "../api/axios";
 import styles from "../styles/Header.module.css";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
@@ -25,16 +25,20 @@ export default function Header() {
   };
   return (
     <header className={styles.header}>
+      {/* TODO: replace deployment url after pushing to prod */}
       <Link to="/">Admin Home</Link>
-      <Link to="/">Public Site</Link>
-
+      {/* <Link to="https://animeshk923.vercel.app" target="_blank">Public Site</Link> */}
+      <Link to={`http://localhost:5173`} target="_blank">
+        Public Site
+      </Link>
+      {/**TODO: remove before deploying */}
       {loading ? null : isAdmin ? (
         <>
           <div className={styles.dropdown}>
             <button className={styles.select}>Menu</button>
             <div className={styles.dropdownMenu}>
               <Link to={`blog/create`}>New Blog</Link>
-              <Link to={`blog/edit`}>Edit</Link>
+              {/* <Link to={`blog/edit`}>Edit</Link> */}
               <Link to={`blog/drafts`}>Draft</Link>
             </div>
           </div>
