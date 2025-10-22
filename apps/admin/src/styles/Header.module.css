@@ -1,0 +1,111 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: x-large;
+  gap: 10rem;
+}
+
+.admin {
+  display: flex;
+  gap: 2rem;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownBtn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 150px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 100;
+}
+
+/* this triggers the open state on hover */
+.dropdown:hover .dropdownMenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownMenu a {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  text-decoration: none;
+  color: #333;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.dropdownMenu a:hover {
+  background: #f3f3f3;
+}
+
+
+
+
+.select {
+  display: flex;
+  appearance: none;
+  background-color: #fffb0a;
+  color: #000000;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.76rem;
+  border: 1px solid #374151;
+  border-radius: 0.6rem;
+  width: 7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.select:hover {
+  border-color: #e8f163;
+}
+
+.select:focus {
+  border-color: #e8f163;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+.option {
+  background-color: #12687e;
+  color: #f9fafb;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .header {
+    font-size: large;
+  }
+}
+@media (max-width: 600px) {
+  .header {
+    align-items: center;
+    font-size: medium;
+    gap: 6em;
+  }
+  .nav {
+    margin-top: 0.5rem;
+  }
+}

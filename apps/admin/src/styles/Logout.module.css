@@ -1,0 +1,117 @@
+:root {
+  --btn-padding-y: 0.9rem;
+  --btn-padding-x: 0.9rem;
+  --btn-radius: 12px;
+  --btn-font-size: 0.95rem;
+  --btn-transition: 180ms ease;
+  --danger-bg: #ff4d4f;
+  --danger-bg-press: #e04345;
+  --danger-text: #fff;
+  --muted-bg: transparent;
+  --muted-text: #111;
+  --focus-ring: 3px;
+}
+
+/* base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  border-radius: var(--btn-radius);
+  font-size: var(--btn-font-size);
+  font-weight: 600;
+  line-height: 1;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  transition: transform var(--btn-transition), box-shadow var(--btn-transition),
+    background-color var(--btn-transition), opacity var(--btn-transition);
+
+  will-change: transform;
+  background: var(--muted-bg);
+  color: var(--muted-text);
+}
+
+/* visual size variants */
+.small {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+.medium {
+  padding: 0.9rem;
+  font-size: 0.95rem;
+}
+.large {
+  padding: 0.7rem 1.1rem;
+  font-size: 1.05rem;
+}
+
+/* danger style (logout) */
+.danger {
+  background: linear-gradient(
+    180deg,
+    var(--danger-bg) 0%,
+    var(--danger-bg) 100%
+  );
+  color: var(--danger-text);
+  box-shadow: 0 6px 18px rgba(255, 77, 79, 0.15);
+}
+
+/* subtle hover/press */
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+.btn:not(:disabled):active {
+  transform: translateY(0);
+}
+.danger:active {
+  background: var(--danger-bg-press);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* disabled */
+:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* focus (keyboard accessible) */
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring) rgba(255, 77, 79, 0.12),
+    0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* icon helper (keeps icon sharp and aligned) */
+.icon {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* text-only label shrink on small widths */
+.label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* optional compact mode (icon only) */
+.compact {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  gap: 0.35rem;
+}
+
+/* high-contrast prefers-reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}

@@ -68,8 +68,6 @@ export default function Login() {
 
   return (
     <div className="container">
-      {/* {console.log(user)} */}
-
       {user ? (
         <>
           <br />
@@ -77,7 +75,9 @@ export default function Login() {
           <span>Already Logged in </span>
           <br />
           <br />
-          <Link to={`/`}>Go to blogs</Link>
+          <Link to={`/`}>
+            <u>Go to homepage</u>
+          </Link>
         </>
       ) : (
         <>
