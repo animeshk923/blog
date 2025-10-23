@@ -36,15 +36,6 @@ a {
 .remainingBlogs > a:hover {
   transform: translateY(-0.7rem);
 }
-/* flexbox approach */
-/* 
-.remainingBlogs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 3rem;
-  gap: 40px;
-} */
 
 .remainingBlogs {
   display: grid;

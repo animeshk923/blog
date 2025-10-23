@@ -36,6 +36,34 @@ function App() {
               description: "Well, yeah...",
             }}
           />
+          <HighlightBlog
+            image={{
+              // TODO: make js file with blog component info as object collection and import here
+              src: "/assets/dark-laptop.jpg",
+              alt: "highlight blog image",
+            }}
+            // TODO: dynamically render blog information from api call
+            // Change component to achieve it
+            blog={{
+              timeline: "Oct, 2025",
+              heading: "New Blog",
+              description: "Well, yeah...",
+            }}
+          />
+          <HighlightBlog
+            image={{
+              // TODO: make js file with blog component info as object collection and import here
+              src: "/assets/dark-laptop.jpg",
+              alt: "highlight blog image",
+            }}
+            // TODO: dynamically render blog information from api call
+            // Change component to achieve it
+            blog={{
+              timeline: "Oct, 2025",
+              heading: "New Blog",
+              description: "Well, yeah...",
+            }}
+          />
         </div>
       </div>
     </>
