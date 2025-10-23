@@ -17,26 +17,21 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
-        element: (
-          <>
-            <h1>DASHBOARD</h1>
-            {/* // TODO: Replace with Dashboard component */}
-            <Dashboard />
-          </>
-        ),
+        element: <ProtectedRoutes />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          {
+            path: "blog",
+            children: [
+              { path: "create", element: <NewBlog /> },
+              // { path: "edit", element: <NewBlog /> },
+              { path: "drafts", element: <DraftBlogs /> },
+            ],
+          },
+        ],
       },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
-      {
-        path: "blog",
-        element: <ProtectedRoutes />,
-        children: [
-          { path: "create", element: <NewBlog /> },
-          // { path: "edit", element: <NewBlog /> },
-          { path: "drafts", element: <DraftBlogs /> },
-        ],
-      },
     ],
   },
 ]);

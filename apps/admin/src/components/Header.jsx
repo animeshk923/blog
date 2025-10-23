@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAdmin } from "../context/AdminContext";
 import axiosInstance, { apiUrl } from "../api/axios";
-import styles from "../styles/Header.module.css";
+import styles from "../styles/Header.module.scss";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import SignupButton from "./SignupButton";

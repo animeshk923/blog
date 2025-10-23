@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import styles from "../styles/TextEditor.module.scss";
 
 export default function TextEditor() {
   const editorRef = useRef(null);
@@ -10,11 +11,11 @@ export default function TextEditor() {
   };
 
   async function handlePublish() {
-    const html = editorRef.current.getContent();
+    const content = editorRef.current.getContent();
   }
 
   async function handleDraft() {
-    const html = editorRef.current.getContent();
+    const content = editorRef.current.getContent();
   }
 
   return (
@@ -56,8 +57,10 @@ export default function TextEditor() {
         }}
       />
       {/** TODO: complete both implementation */}
-      <button onClick={handlePublish}>Publish</button>
-      <button onClick={handleDraft}>Save as draft</button>
+      <span className={styles.actionSpan}>
+        <button onClick={handlePublish}>Publish</button>
+        <button onClick={handleDraft}>Save as draft</button>
+      </span>
     </>
   );
 }

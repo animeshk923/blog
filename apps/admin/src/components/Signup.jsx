@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import "./Login.css";
+import styles from "../styles/Login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 export default function Signup() {
   const [userExists, setUserExists] = useState(false);
@@ -30,7 +30,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       {userExists ? (
         <>
           <br />
@@ -41,9 +41,9 @@ export default function Signup() {
           <Link to={`/login`}>Go to login</Link>
         </>
       ) : (
-        <div className="login">
+        <div className={styles.login}>
           <form onSubmit={handleSubmit}>
-            <span className="formTitle">Sign Up</span>
+            <span className={styles.formTitle}>Sign Up</span>
             <input
               type="text"
               placeholder="fullName"
@@ -67,7 +67,7 @@ export default function Signup() {
               placeholder="Admin Password"
               onChange={(e) => setadminPass(e.target.value)}
             />
-            <button type="submit" className="submitButton">
+            <button type="submit" className={styles.submitButton}>
               Sign Up
             </button>
           </form>
