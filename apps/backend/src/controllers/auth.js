@@ -140,7 +140,7 @@ async function verifyToken(req, res, next) {
     console.log("403 verifyToken error");
     res
       .status(403)
-      .json({ msg: "Either token not found or expired. Please log in again." });
+      .json({ msg: "Either token not found or expired. Please log in." });
   }
 }
 
