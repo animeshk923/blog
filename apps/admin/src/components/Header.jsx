@@ -39,7 +39,7 @@ export default function Header() {
             <div className={styles.dropdownMenu}>
               <Link to={`blog/create`}>New Blog</Link>
               {/* <Link to={`blog/edit`}>Edit</Link> */}
-              <Link to={`blog/drafts`}>Draft</Link>
+              <Link to={`blog/drafts`}>Your Drafts</Link>
             </div>
           </div>
           <LogoutButton onClick={handleLogout} />
