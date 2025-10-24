@@ -6,6 +6,10 @@ import axiosInstance, { apiUrl } from "../api/axios";
 export default function TextEditor() {
   const editorRef = useRef(null);
 
+  /**
+   * Function to retrieve the current user's id from database
+   * @returns user id from database of current logged in account.
+   */
   const getUserid = async function () {
     const token = localStorage.getItem("token");
     if (!token) return -1;
@@ -19,7 +23,7 @@ export default function TextEditor() {
   };
 
   /**
-   * Escapes the content's HTML characters for safe parsing by backend handlers
+   * Escapes the content's HTML characters for safe parsing by backend handlers.
    * @param {String} str incoming html content from tinyMCE editor
    * @returns escaped sanitized html content
    */
@@ -27,7 +31,7 @@ export default function TextEditor() {
     if (!editorRef.current) return;
     const content = editorRef.current.getContent();
     const title = document.querySelector("#titleInput").value.trim();
-    // TODO: setup backend handlers before passing data from the frontend
+
     const userid = await getUserid();
     console.log(userid);
 
@@ -52,6 +56,7 @@ export default function TextEditor() {
       });
   }
 
+  // TODO: connect this to backend
   async function handleDraft() {
     const content = editorRef.current.getContent();
     console.log(content);

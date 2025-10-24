@@ -28,13 +28,11 @@ async function editBlog(req, res) {
 
 // TODO: use cloudinary in the second iteration to host images for the cover and any image inside the blog itself.
 
-// TODO: implement functionality
 async function createNewBlog(req, res) {
   const { content, title, publishStatus, userId } = req.body;
 
-  // console.log("body:", req.body);
-  console.log('blog:',content);
-  console.log('title:',title);
+  console.log("blog:", content);
+  console.log("title:", title);
   console.log(publishStatus);
   console.log(userId);
 
