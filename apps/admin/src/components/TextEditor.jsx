@@ -5,9 +5,16 @@ import axiosInstance, { apiUrl } from "../api/axios";
 
 export default function TextEditor() {
   const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+
+  const getUserid = async function () {
+    const token = localStorage.getItem("token");
+    if (!token) return -1;
+    try {
+      const { data } = await axiosInstance.get(`${apiUrl}/auth/me`);
+      return data.userid;
+    } catch (err) {
+      console.error(err);
+      return -1;
     }
   };
 
@@ -16,50 +23,29 @@ export default function TextEditor() {
    * @param {String} str incoming html content from tinyMCE editor
    * @returns escaped sanitized html content
    */
-  function escapeHTML(str) {
-    return str.replace(
-      /[&<>'"]/g,
-      (tag) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          "'": "&#39;",
-          '"': "&quot;",
-        }[tag])
-    );
-  }
-
-  const sample = `sample text START BLOGGING!.
-
-# heading 1
-## heading 2
-- bullet 1
-- bullet 2
-1. ordered 1
-2. ordered 2
-
-bold
-
-italics
-
-bold italics
-
-normal text`;
-
   async function handlePublish() {
     if (!editorRef.current) return;
     const content = editorRef.current.getContent();
-    console.log("publishing", content);
-    const sanitizedContent = escapeHTML(content);
-    console.log("sanitized", sanitizedContent);
+    const title = document.querySelector("#titleInput").value.trim();
     // TODO: setup backend handlers before passing data from the frontend
+    const userid = await getUserid();
+    console.log(userid);
+
     axiosInstance
-      .post(`${apiUrl}/new/publish`, sanitizedContent, {
-        headers: { "Content-Type": "text/html" },
-      })
+      .post(
+        `${apiUrl}/blog/new/publish`,
+        {
+          title,
+          content,
+          publishStatus: true,
+          userId: userid,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
       .then((res) => {
-        console.log("published successfully");
+        console.log("published successfully:", res);
       })
       .catch((err) => {
         console.log(err);
@@ -73,6 +59,18 @@ normal text`;
 
   return (
     <>
+      <div>
+        <label htmlFor="blogTitle" className={styles.titleLabel}>
+          Title:{" "}
+        </label>
+        <input
+          type="text"
+          required
+          placeholder="Blog title"
+          className={styles.titleInput}
+          id="titleInput"
+        ></input>
+      </div>
       <Editor
         apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
         onInit={(evt, editor) => (editorRef.current = editor)}

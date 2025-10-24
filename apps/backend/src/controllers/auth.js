@@ -151,6 +151,7 @@ async function verifyUser(req, res) {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({
+      userid: user.id,
       msg: "User verified!",
       name: user.fullName,
       email: user.email,

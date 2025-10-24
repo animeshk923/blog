@@ -15,4 +15,15 @@ async function createUser(name, email, password, isAdmin) {
 async function getUser(email) {
   return await prisma.user.findUnique({ where: { email: email } });
 }
-module.exports = { createUser, getUser };
+
+async function storeBlog(title, content, publishStatus, userId) {
+  await prisma.post.create({
+    data: {
+      title: title,
+      body: content,
+      isPublished: publishStatus,
+      userId: userId,
+    },
+  });
+}
+module.exports = { createUser, getUser, storeBlog };

@@ -4843,7 +4843,7 @@ export namespace Prisma {
   export type PostCreateInput = {
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     User: UserCreateNestedOneWithoutPostsInput
     Comment?: CommentCreateNestedManyWithoutPostInput
@@ -4853,7 +4853,7 @@ export namespace Prisma {
     id?: number
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     userId: number
     Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
@@ -4882,7 +4882,7 @@ export namespace Prisma {
     id?: number
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     userId: number
   }
@@ -5522,7 +5522,7 @@ export namespace Prisma {
   export type PostCreateWithoutUserInput = {
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     Comment?: CommentCreateNestedManyWithoutPostInput
   }
@@ -5531,7 +5531,7 @@ export namespace Prisma {
     id?: number
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
@@ -5676,7 +5676,7 @@ export namespace Prisma {
   export type PostCreateWithoutCommentInput = {
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     User: UserCreateNestedOneWithoutPostsInput
   }
@@ -5685,7 +5685,7 @@ export namespace Prisma {
     id?: number
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
     userId: number
   }
@@ -5727,7 +5727,7 @@ export namespace Prisma {
     id?: number
     title: string
     body: string
-    time: Date | string
+    time?: Date | string
     isPublished: boolean
   }
 

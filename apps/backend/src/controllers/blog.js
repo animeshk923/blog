@@ -1,5 +1,6 @@
 require("dotenv").config();
-
+const sanitizeHtml = require("sanitize-html");
+const { storeBlog } = require("../prisma/queries");
 // TODO: implement functionality
 async function getAllBlogs(req, res) {
   // get all blogs from the database
@@ -29,9 +30,28 @@ async function editBlog(req, res) {
 
 // TODO: implement functionality
 async function createNewBlog(req, res) {
-  // get specific blog from the database
+  const { content, title, publishStatus, userId } = req.body;
 
-  res.json({ msg: "publish new blog?" });
+  // console.log("body:", req.body);
+  console.log('blog:',content);
+  console.log('title:',title);
+  console.log(publishStatus);
+  console.log(userId);
+
+  try {
+    await storeBlog(
+      sanitizeHtml(title),
+      sanitizeHtml(content),
+      publishStatus,
+      userId
+    );
+    res.status(200).json({ msg: "new blog publish! check DB to verify" });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(400)
+      .json({ msg: "Error publishing blog. Check log for details" });
+  }
 }
 
 // TODO: implement functionality
