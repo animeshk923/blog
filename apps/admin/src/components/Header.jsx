@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAdmin } from "../context/AdminContext";
-import axiosInstance, { apiUrl } from "../api/axios";
+import axiosInstance from "../api/axios";
 import styles from "../styles/Header.module.scss";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
@@ -34,14 +34,7 @@ export default function Header() {
       {/**TODO: remove before deploying */}
       {loading ? null : isAdmin ? (
         <>
-          <div className={styles.dropdown}>
-            <button className={styles.select}>Menu</button>
-            <div className={styles.dropdownMenu}>
-              <Link to={`blog/create`}>New Blog</Link>
-              {/* <Link to={`blog/edit`}>Edit</Link> */}
-              <Link to={`blog/drafts`}>Your Drafts</Link>
-            </div>
-          </div>
+          <Link to={`blog/drafts`}>Your Drafts</Link>
           <LogoutButton onClick={handleLogout} />
         </>
       ) : (
