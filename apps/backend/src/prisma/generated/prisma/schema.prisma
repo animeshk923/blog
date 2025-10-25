@@ -29,10 +29,10 @@ model Post {
   id          Int       @id @default(autoincrement())
   title       String
   body        String
-  time        DateTime  @default(now())
+  time        DateTime  @default(now()) @db.Date
   isPublished Boolean
-  User        User      @relation(fields: [userId], references: [id])
   userId      Int
+  User        User      @relation(fields: [userId], references: [id])
   Comment     Comment[]
 }
 

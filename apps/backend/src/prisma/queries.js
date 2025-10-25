@@ -12,6 +12,16 @@ async function createUser(name, email, password, isAdmin) {
   });
 }
 
+async function queryGetAllBlogs() {
+  return await prisma.post.findMany({
+    orderBy: {
+      time: "desc",
+    },
+
+    where: { isPublished: true },
+  });
+}
+
 async function getUser(email) {
   return await prisma.user.findUnique({ where: { email: email } });
 }
@@ -23,7 +33,8 @@ async function storeBlog(title, content, publishStatus, userId) {
       body: content,
       isPublished: publishStatus,
       userId: userId,
+      time: new Date(),
     },
   });
 }
-module.exports = { createUser, getUser, storeBlog };
+module.exports = { createUser, getUser, storeBlog, queryGetAllBlogs };
