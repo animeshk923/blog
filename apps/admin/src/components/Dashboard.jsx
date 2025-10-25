@@ -46,9 +46,9 @@ function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="dashboardGrid">
+      <div className={styles.dashboardGrid}>
         {stats.map((stat, index) => (
-          <div key={index} className="card">
+          <div key={index} className={styles.card}>
             <div className={styles.statCard}>
               <div className={styles.statIcon}>{stat.icon}</div>
               <div className={styles.statContent}>
@@ -61,7 +61,7 @@ function Dashboard() {
       </div>
 
       {/* Blogs Table */}
-      <div className="card">
+      <div className={styles.card}>
         <div className={styles.tableHeader}>
           <h2 className={styles.tableTitle}>Recent Blogs</h2>
           <button className={styles.btnPrimary}>+ New Blog</button>
