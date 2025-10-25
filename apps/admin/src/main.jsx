@@ -6,10 +6,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
-import NewBlog from "./components/NewBlog.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import DraftBlogs from "./components/DraftBlogs.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import TextEditor from "./components/TextEditor.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
           {
             path: "blog",
             children: [
-              { path: "create", element: <NewBlog /> },
+              { path: "new", element: <TextEditor /> },
               // { path: "edit", element: <NewBlog /> },
               { path: "drafts", element: <DraftBlogs /> },
             ],

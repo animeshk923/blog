@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../styles/Dashboard.module.scss";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   // placeholder data
@@ -39,6 +40,8 @@ function Dashboard() {
     { label: "Total Views", value: "2,140", icon: "👁️" },
   ];
 
+  function handleNewBlog() {}
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardHeader}>
@@ -64,7 +67,9 @@ function Dashboard() {
       <div className={styles.card}>
         <div className={styles.tableHeader}>
           <h2 className={styles.tableTitle}>Recent Blogs</h2>
-          <button className={styles.btnPrimary}>+ New Blog</button>
+          <button className={styles.btnPrimary} onClick={handleNewBlog}>
+            <Link to={"blog/new"}>+ New Blog</Link>
+          </button>
         </div>
 
         <div className={styles.tableContainer}>

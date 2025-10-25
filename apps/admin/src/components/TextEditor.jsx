@@ -22,11 +22,6 @@ export default function TextEditor() {
     }
   };
 
-  /**
-   * Escapes the content's HTML characters for safe parsing by backend handlers.
-   * @param {String} str incoming html content from tinyMCE editor
-   * @returns escaped sanitized html content
-   */
   async function handlePublish() {
     if (!editorRef.current) return;
     const content = editorRef.current.getContent();
@@ -63,60 +58,84 @@ export default function TextEditor() {
   }
 
   return (
-    <>
-      <div>
+    <div className={styles.textEditorContainer}>
+      <div className={styles.header}>
+        <h1 className={styles.pageTitle}>Create New Blog</h1>
+        <p className={styles.pageSubtitle}>
+          Write and publish your blog content
+        </p>
+      </div>
+
+      <div className={styles.titleSection}>
         <label htmlFor="blogTitle" className={styles.titleLabel}>
-          Title:{" "}
+          Blog Title
         </label>
         <input
           type="text"
           required
-          placeholder="Blog title"
+          placeholder="Enter your blog title here..."
           className={styles.titleInput}
           id="titleInput"
-        ></input>
+        />
       </div>
-      <Editor
-        apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue="<p>START BLOGGING!.</p>"
-        init={{
-          height: 500,
-          menubar: false,
-          plugins: [
-            "advlist",
-            "autolink",
-            "lists",
-            "link",
-            "image",
-            "charmap",
-            "preview",
-            "anchor",
-            "searchreplace",
-            "visualblocks",
-            "code",
-            "fullscreen",
-            "insertdatetime",
-            "media",
-            "table",
-            "code",
-            "help",
-            "wordcount",
-          ],
-          toolbar:
-            "undo redo | blocks | " +
-            "bold italic forecolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-        }}
-      />
-      {/** TODO: complete both implementation */}
-      <span className={styles.actionSpan}>
-        <button onClick={handlePublish}>Publish</button>
-        <button onClick={handleDraft}>Save as draft</button>
-      </span>
-    </>
+
+      <div className={styles.editorSection}>
+        <label className={styles.editorLabel}>Content</label>
+        <div className={styles.editorWrapper}>
+          <Editor
+            apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+            onInit={(evt, editor) => (editorRef.current = editor)}
+            initialValue="<p>Start writing your blog content here...</p>"
+            init={{
+              height: 500,
+              menubar: false,
+              plugins: [
+                "advlist",
+                "autolink",
+                "lists",
+                "link",
+                "image",
+                "charmap",
+                "preview",
+                "anchor",
+                "searchreplace",
+                "visualblocks",
+                "code",
+                "fullscreen",
+                "insertdatetime",
+                "media",
+                "table",
+                "code",
+                "help",
+                "wordcount",
+              ],
+              toolbar:
+                "undo redo | blocks | " +
+                "bold italic forecolor | alignleft aligncenter " +
+                "alignright alignjustify | bullist numlist outdent indent | " +
+                "removeformat | help",
+              content_style:
+                "body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; color: #ffffff; }",
+              skin: "oxide-dark",
+              content_css: "dark",
+            }}
+          />
+        </div>
+      </div>
+
+      <div className={styles.actionSection}>
+        <div className={styles.actionButtons}>
+          {/** TODO: complete both implementation */}
+          <button className={styles.btnDraft} onClick={handleDraft}>
+            <span className={styles.btnIcon}></span>
+            Save as Draft
+          </button>
+          <button className={styles.btnPublish} onClick={handlePublish}>
+            <span className={styles.btnIcon}></span>
+            Publish Blog
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
