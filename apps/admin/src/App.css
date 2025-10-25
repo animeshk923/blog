@@ -22,7 +22,7 @@ a {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  ebalign-items: center;
   gap: 5rem;
 }
 

@@ -1,78 +1,127 @@
-/* TODO: change highlightBlog name to blogCard or similar and remove the earlier stylings for individual cards */
-
-/* comment out and try different styles if you feel like it */
+/* Modern blog card design */
 .highlightBlog {
-  min-width: 55rem;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
-  border-color: red;
-  /* text-align: center; */
-  background: linear-gradient(90deg, #c0ae0c 0%, #003438 90%);
-  /* box-shadow: 0 4px 24px #fffd6c, 2px 2.5px 20px rgb(10, 190, 34); */
-  /* transition: transform 0.2s ease-out, box-shadow 0.3s; */
-  /* padding: 1.5rem 1rem; */
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
+.highlightBlog::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(126, 217, 240, 0.3),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
 .highlightBlog:hover {
-  transform: translateY(-6px);
-  /* box-shadow: 0 8px 32px rgba(114, 225, 253, 0.966), 0 2px 8px rgb(85, 250, 63); */
-  /* border-color: #ffec80; */
+  transform: translateY(-4px);
+  border-color: rgba(126, 217, 240, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.05);
 }
 
-.highlightBlog img {
-  border-radius: 0.7rem;
+.highlightBlog:hover::before {
+  opacity: 1;
+}
+
+.img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.highlightBlog:hover .img {
+  transform: scale(1.02);
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 0.75rem;
+  flex: 1;
 }
 
-.info > * {
-  margin-right: 1rem;
+.info p:first-child {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
 }
 
-.img {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  border-radius: 20px;
+.h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: -0.02em;
 }
 
-.h1{
-  font-size: 2rem;
+.info p:last-child {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0;
 }
 
-/* TODO: adjust styles for responsive designs */
+/* Responsive design */
 @media (max-width: 900px) {
   .highlightBlog {
     flex-direction: column;
-    align-items: center;
-    max-width: 100%;
-    background: linear-gradient(180deg, #fff27e 0%, #003438 90%);
+    gap: 1.5rem;
+    padding: 1.5rem;
   }
-  .highlightBlog > img {
+
+  .img {
     width: 100%;
-    max-width: 400px;
-    height: auto;
+    height: 200px;
+    max-width: none;
+  }
+
+  .h1 {
+    font-size: 1.5rem;
   }
 }
-/* TODO: adjust styles for responsive designs */
+
 @media (max-width: 600px) {
-  .highlightBlog > img {
-    max-width: 100%;
+  .highlightBlog {
+    padding: 1.25rem;
+    gap: 1.25rem;
   }
-  .info {
-    padding: 0 1rem;
-    gap: 1.2rem;
+
+  .img {
+    height: 180px;
   }
-  .info > h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 0.5rem;
+
+  .h1 {
+    font-size: 1.375rem;
+  }
+
+  .info p:last-child {
+    font-size: 0.9rem;
   }
 }
