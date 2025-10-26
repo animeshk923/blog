@@ -77,7 +77,19 @@ async function convertToDraft(req, res) {
 // TODO: implement functionality
 async function deleteBlog(req, res) {
   // get specific blog from the database
-  res.json({ msg: "convert to draft blog?" });
+  try {
+    const { blogid } = req.params;
+    console.log("Deleting blog with id:", blogid);
+    await deleteSingleBlog(blogid);
+    res.status(200).json({ msg: "Blog deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({
+        msg: "Server error while deleting blog. Check log for details.",
+      });
+  }
 }
 
 module.exports = {

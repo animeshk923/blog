@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import styles from "../styles/TextEditor.module.scss";
 import axiosInstance, { apiUrl } from "../api/axios";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+const navigate = useNavigate();
 
 export default function TextEditor() {
   const editorRef = useRef(null);
@@ -27,6 +29,7 @@ export default function TextEditor() {
     }
     getBlog();
   }, [blogId]);
+
 
   /**
    * Function to retrieve the current user's id from database
@@ -67,6 +70,7 @@ export default function TextEditor() {
       )
       .then((res) => {
         console.log("published successfully:", res);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
