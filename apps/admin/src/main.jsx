@@ -24,7 +24,7 @@ const router = createBrowserRouter([
             path: "blog",
             children: [
               { path: "new", element: <TextEditor /> },
-              { path: "edit/:blogId", element: <TextEditor /> },
+              { path: "edit/:blogid", element: <TextEditor /> },
               { path: "drafts", element: <DraftBlogs /> },
             ],
           },

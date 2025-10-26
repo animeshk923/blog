@@ -4,32 +4,32 @@ import styles from "../styles/TextEditor.module.scss";
 import axiosInstance, { apiUrl } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-const navigate = useNavigate();
 
 export default function TextEditor() {
+  const navigate = useNavigate();
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState(
     "<p>Start writing your blog content here...</p>"
   );
-  const { blogId } = useParams();
+  const { blogid } = useParams();
 
   useEffect(() => {
-    if (!blogId) return;
+    if (!blogid) return;
 
     async function getBlog() {
       try {
-        const res = await axiosInstance.get(`${apiUrl}/blog/${blogId}`);
-        const { title, content } = res.data;
+        const res = await axiosInstance.get(`${apiUrl}/blog/${blogid}`);
+        const { title, body } = res.data;
+
         setTitle(title);
-        setContent(content);
+        setContent(body);
       } catch (err) {
         console.error("Failed to fetch blog:", err);
       }
     }
     getBlog();
-  }, [blogId]);
-
+  }, [blogid]);
 
   /**
    * Function to retrieve the current user's id from database
@@ -87,10 +87,10 @@ export default function TextEditor() {
     <div className={styles.textEditorContainer}>
       <div className={styles.header}>
         <h1 className={styles.pageTitle}>
-          {blogId ? "Edit Blog" : "Create New Blog"}
+          {blogid ? "Edit Blog" : "Create New Blog"}
         </h1>
         <p className={styles.pageSubtitle}>
-          {blogId
+          {blogid
             ? "Edit and update your blog content"
             : "Write and publish your blog content"}
         </p>

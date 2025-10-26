@@ -37,11 +37,17 @@ async function storeBlog(title, content, publishStatus, userId) {
     },
   });
 }
-async function getBlogById(blogId) {
+async function getBlogById(blogid) {
   return await prisma.post.findUnique({
     where: {
-      id: parseInt(blogId),
+      id: parseInt(blogid),
     },
   });
 }
-module.exports = { createUser, getUser, storeBlog, queryGetAllBlogs, getBlogById };
+module.exports = {
+  createUser,
+  getUser,
+  storeBlog,
+  queryGetAllBlogs,
+  getBlogById,
+};
