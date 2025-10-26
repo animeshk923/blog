@@ -1,10 +1,6 @@
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
-const {
-  storeBlog,
-  queryGetAllBlogs,
-  deleteSingleBlog,
-} = require("../prisma/queries");
+const { storeBlog, queryGetAllBlogs, getBlogById } = require("../prisma/queries");
 // TODO: implement functionality
 // get all blogs from the database
 
@@ -20,10 +16,17 @@ async function getAllBlogs(req, res) {
   }
 }
 
-// TODO: implement functionality
 async function getSingleBlog(req, res) {
-  // get specific blog from the database
-  res.json({ msg: "single blog" });
+  try {
+    const blog = await getBlogById(req.params.blogid);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.json(blog);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 }
 
 // TODO: implement functionality

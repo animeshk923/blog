@@ -37,17 +37,11 @@ async function storeBlog(title, content, publishStatus, userId) {
     },
   });
 }
-async function deleteSingleBlog(blogid) {
-  await prisma.post.delete({
+async function getBlogById(blogId) {
+  return await prisma.post.findUnique({
     where: {
-      id: Number(blogid),
+      id: parseInt(blogId),
     },
   });
 }
-module.exports = {
-  createUser,
-  getUser,
-  storeBlog,
-  queryGetAllBlogs,
-  deleteSingleBlog,
-};
+module.exports = { createUser, getUser, storeBlog, queryGetAllBlogs, getBlogById };

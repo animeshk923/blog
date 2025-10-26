@@ -1,11 +1,36 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import styles from "../styles/TextEditor.module.scss";
 import axiosInstance, { apiUrl } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+const navigate = useNavigate();
+
 export default function TextEditor() {
   const editorRef = useRef(null);
-  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState(
+    "<p>Start writing your blog content here...</p>"
+  );
+  const { blogId } = useParams();
+
+  useEffect(() => {
+    if (!blogId) return;
+
+    async function getBlog() {
+      try {
+        const res = await axiosInstance.get(`${apiUrl}/blog/${blogId}`);
+        const { title, content } = res.data;
+        setTitle(title);
+        setContent(content);
+      } catch (err) {
+        console.error("Failed to fetch blog:", err);
+      }
+    }
+    getBlog();
+  }, [blogId]);
+
+
   /**
    * Function to retrieve the current user's id from database
    * @returns user id from database of current logged in account.
@@ -61,9 +86,13 @@ export default function TextEditor() {
   return (
     <div className={styles.textEditorContainer}>
       <div className={styles.header}>
-        <h1 className={styles.pageTitle}>Create New Blog</h1>
+        <h1 className={styles.pageTitle}>
+          {blogId ? "Edit Blog" : "Create New Blog"}
+        </h1>
         <p className={styles.pageSubtitle}>
-          Write and publish your blog content
+          {blogId
+            ? "Edit and update your blog content"
+            : "Write and publish your blog content"}
         </p>
       </div>
 
@@ -77,6 +106,8 @@ export default function TextEditor() {
           placeholder="Enter your blog title here..."
           className={styles.titleInput}
           id="titleInput"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
@@ -86,7 +117,8 @@ export default function TextEditor() {
           <Editor
             apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
             onInit={(evt, editor) => (editorRef.current = editor)}
-            initialValue="<p>Start writing your blog content here...</p>"
+            value={content}
+            initialValue={content}
             init={{
               height: 500,
               menubar: false,
