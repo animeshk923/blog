@@ -29,35 +29,6 @@ function Dashboard() {
     };
   }, []);
 
-  console.log(blogs);
-  // placeholder data
-  // const blogs = [
-  //   {
-  //     id: 1,
-  //     title: "Becoming an open source dweller",
-  //     status: isPublished ? "Published" : "Draft",
-  //     date: "2025-06-21",
-  //     views: 1250,
-  //     author: "Animesh Kumar",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Building a File Uploader with Cloudinary",
-  //     status: "Draft",
-  //     date: "2025-10-15",
-  //     views: 0,
-  //     author: "Animesh Kumar",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Sample Blog Post",
-  //     status: "Published",
-  //     date: "2025-06-15",
-  //     views: 890,
-  //     author: "Animesh Kumar",
-  //   },
-  // ];
-
   let draftCount = 0;
   let publishedCount = 0;
   blogs.map((blog) => {
@@ -68,12 +39,24 @@ function Dashboard() {
     }
   });
 
+  async function handleDelete(blogid) {
+    try {
+      alert("Delete blog with id: " + blogid);
+      await axiosInstance.delete(`${apiUrl}/blog/${blogid}`);
+      // remove the deleted blog from the state
+      // setBlogs(blogs.filter((blog) => blog.id !== blogid));
+      window.location.reload();
+    } catch (err) {
+      console.error("Failed to delete blog:", err);
+      alert("Failed to delete blog. Check console for details.");
+    }
+  }
   const stats = [
     // replace icons with actual icons later on
-    { label: "Total Blogs", value: blogs.length, icon: "📝" },
-    { label: "Published", value: publishedCount, icon: "✅" },
-    { label: "Drafts", value: draftCount, icon: "📄" },
-    // { label: "Total Views", value: "2,140", icon: "👁️" },
+    { label: "Total Blogs", value: blogs.length },
+    { label: "Published", value: publishedCount },
+    { label: "Drafts", value: draftCount },
+    // { label: "Total Views", value: "2,140"},
   ];
 
   function handleNewBlog() {}
@@ -89,7 +72,7 @@ function Dashboard() {
         {stats.map((stat, index) => (
           <div key={index} className={styles.card}>
             <div className={styles.statCard}>
-              <div className={styles.statIcon}>{stat.icon}</div>
+              {/* <div className={styles.statIcon}>{stat.icon}</div> */}
               <div className={styles.statContent}>
                 <div className={styles.statValue}>{stat.value}</div>
                 <div className={styles.statLabel}>{stat.label}</div>
@@ -163,7 +146,14 @@ function Dashboard() {
                     <td>
                       <div className={styles.actionButtons}>
                         <button className={styles.btnEdit}>Edit</button>
-                        <button className={styles.btnDelete}>Delete</button>
+                        <button
+                          className={styles.btnDelete}
+                          onClick={() => {
+                            handleDelete(blog.id);
+                          }}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>
