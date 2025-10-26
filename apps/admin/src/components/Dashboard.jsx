@@ -162,7 +162,9 @@ function Dashboard() {
                     {/* actions column */}
                     <td>
                       <div className={styles.actionButtons}>
-                        <button className={styles.btnEdit}>Edit</button>
+                        <Link to={`blog/edit/${blog.id}`}>
+                          <button className={styles.btnEdit}>Edit</button>
+                        </Link>
                         <button className={styles.btnDelete}>Delete</button>
                       </div>
                     </td>
