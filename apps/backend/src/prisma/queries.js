@@ -44,10 +44,24 @@ async function getBlogById(blogid) {
     },
   });
 }
+
+async function updateBlogById(blogid, title, content, publishStatus) {
+  await prisma.post.update({
+    data: {
+      title,
+      body: content,
+      isPublished: publishStatus,
+    },
+    where: {
+      id: parseInt(blogid),
+    },
+  });
+}
 module.exports = {
   createUser,
   getUser,
   storeBlog,
   queryGetAllBlogs,
   getBlogById,
+  updateBlogById
 };

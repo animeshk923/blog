@@ -1,6 +1,6 @@
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
-const { storeBlog, queryGetAllBlogs, getBlogById } = require("../prisma/queries");
+const { storeBlog, queryGetAllBlogs, getBlogById, updateBlogById } = require("../prisma/queries");
 // TODO: implement functionality
 // get all blogs from the database
 
@@ -39,7 +39,16 @@ async function getDraftBlog(req, res) {
 // TODO: implement functionality
 async function editBlog(req, res) {
   // get specific blog from the database
-  res.json({ msg: "edit blog?", authData: req.authData });
+  const {blogid} = req.params;
+  const {title, content, publishStatus} = req.body;
+
+  console.log("Editing blog id:", blogid);
+  console.log("New title:", title);
+  console.log("New content:", content);
+  console.log("New publish status:", publishStatus);
+
+  await updateBlogById(blogid, sanitizeHtml(title), sanitizeHtml(content), publishStatus);
+  res.status(200).json({ msg: "edit success!", authData: req.authData });
 }
 
 // TODO: use cloudinary in the second iteration to host images for the cover and any image inside the blog itself.
@@ -59,7 +68,7 @@ async function createNewBlog(req, res) {
       publishStatus,
       userId
     );
-    res.status(200).json({ msg: "new blog publish! check DB to verify" });
+    res.status(201).json({ msg: "new blog publish! check DB to verify" });
   } catch (err) {
     console.log(err);
     res
@@ -80,7 +89,7 @@ async function deleteBlog(req, res) {
   try {
     const { blogid } = req.params;
     console.log("Deleting blog with id:", blogid);
-    await deleteSingleBlog(blogid);
+    await getBlogById(blogid);
     res.status(200).json({ msg: "Blog deleted successfully" });
   } catch (err) {
     console.error(err);
