@@ -5,6 +5,7 @@ const {
   queryGetAllBlogs,
   getBlogById,
   updateBlogById,
+  deleteBlogById,
 } = require("../prisma/queries");
 // TODO: implement functionality
 // get all blogs from the database
@@ -92,7 +93,7 @@ async function deleteBlog(req, res) {
   try {
     const { blogid } = req.params;
     console.log("Deleting blog with id:", blogid);
-    await getBlogById(blogid);
+    await deleteBlogById(blogid);
     res.status(200).json({ msg: "Blog deleted successfully" });
   } catch (err) {
     console.error(err);

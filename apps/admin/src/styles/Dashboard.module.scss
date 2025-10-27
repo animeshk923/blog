@@ -176,7 +176,9 @@
 
   .btnPrimary,
   .btnEdit,
-  .btnDelete {
+  .btnDelete,
+  .btnUnpublish,
+  .btnPublish {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     font-size: 0.875rem;
@@ -214,6 +216,24 @@
 
     &:hover {
       background: rgba(239, 68, 68, 0.2);
+    }
+  }
+  .btnUnpublish {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ffb03a;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+
+    &:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+  }
+  .btnPublish {
+    background: rgba(186, 255, 75, 0.1);
+    color: #4ff887;
+    border: 1px solid rgba(245, 234, 78, 0.2);
+
+    &:hover {
+      background: rgba(113, 163, 55, 0.384);
     }
   }
 }

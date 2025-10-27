@@ -1,5 +1,5 @@
 import styles from "../styles/Dashboard.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import axiosInstance, { apiUrl } from "../api/axios";
 
@@ -7,6 +7,7 @@ function Dashboard() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let cancelled = false;
@@ -38,18 +39,26 @@ function Dashboard() {
   }, [blogs]);
 
   async function handleDelete(blogid) {
+    if (!confirm("Delete blog with id: " + blogid)) {
+      alert("Deletion cancelled");
+      return;
+    }
+
     try {
-      alert("Delete blog with id: " + blogid);
       await axiosInstance.delete(`${apiUrl}/blog/${blogid}`);
-      window.location.reload();
+      setBlogs((currentBlogs) =>
+        currentBlogs.filter((blog) => blog.id !== blogid)
+      );
     } catch (err) {
       console.error("Failed to delete blog:", err);
       alert("Failed to delete blog. Check console for details.");
     }
   }
 
-  function handleNewBlog() {}
-
+  function handleNewBlog() {
+    // navigate to new blog editor
+    navigate("blog/new");
+  }
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardHeader}>
@@ -76,7 +85,7 @@ function Dashboard() {
         <div className={styles.tableHeader}>
           <h2 className={styles.tableTitle}>All Blogs</h2>
           <button className={styles.btnPrimary} onClick={handleNewBlog}>
-            <Link to={"blog/new"}>+ New Blog</Link>
+            + New Blog
           </button>
         </div>
 
@@ -104,9 +113,6 @@ function Dashboard() {
                     <td>
                       <div className={styles.blogTitle}>
                         <span className={styles.titleText}>{blog.title}</span>
-                        {/* <span className={styles.authorText}>
-                        by {blog.author}
-                      </span> */}
                       </div>
                     </td>
                     {/* blog status column */}
@@ -131,6 +137,7 @@ function Dashboard() {
                     {/* <td className={styles.viewsCell}>
                     {blog.views.toLocaleString()}
                   </td> */}
+
                     {/* actions column */}
                     <td>
                       <div className={styles.actionButtons}>
@@ -145,6 +152,13 @@ function Dashboard() {
                         >
                           Delete
                         </button>
+                        {blog.isPublished ? (
+                          <button className={styles.btnUnpublish}>
+                            Unpublish
+                          </button>
+                        ) : (
+                          <button className={styles.btnPublish}>Publish</button>
+                        )}
                       </div>
                     </td>
                   </tr>
