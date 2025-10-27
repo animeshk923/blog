@@ -6,6 +6,7 @@ const {
   getBlogById,
   updateBlogById,
   deleteBlogById,
+  updateBlogStatus,
 } = require("../prisma/queries");
 // TODO: implement functionality
 // get all blogs from the database
@@ -82,9 +83,19 @@ async function createNewBlog(req, res) {
 }
 
 // TODO: implement functionality
-async function convertToDraft(req, res) {
+async function toggleBlogStatus(req, res) {
   // get specific blog from the database
-  res.json({ msg: "publish new blog?" });
+  const { blogid } = req.params;
+  const { publishStatus } = req.body;
+  try {
+    await updateBlogStatus(blogid, publishStatus);
+    res.json({ msg: `blog ${publishStatus ? "published" : "unpublished"}` });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      msg: "server error while toggling blog status. Check server log for details",
+    });
+  }
 }
 
 // TODO: implement functionality
@@ -110,5 +121,5 @@ module.exports = {
   editBlog,
   createNewBlog,
   deleteBlog,
-  convertToDraft,
+  toggleBlogStatus,
 };

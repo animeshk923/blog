@@ -43,7 +43,6 @@ function Dashboard() {
       alert("Deletion cancelled");
       return;
     }
-
     try {
       await axiosInstance.delete(`${apiUrl}/blog/${blogid}`);
       setBlogs((currentBlogs) =>
@@ -56,9 +55,26 @@ function Dashboard() {
   }
 
   function handleNewBlog() {
-    // navigate to new blog editor
     navigate("blog/new");
   }
+
+  async function handleToggleBlogStatus(blogid, status) {
+    try {
+      await axiosInstance.put(`${apiUrl}/blog/${blogid}/toggle`, {
+        publishStatus: status,
+      });
+
+      setBlogs((currentBlogs) =>
+        currentBlogs.map((blog) =>
+          blog.id === blogid ? { ...blog, isPublished: status } : blog
+        )
+      );
+    } catch (err) {
+      console.error("Failed to toggle blog status:", err);
+      alert("Failed to update status. Please try again.");
+    }
+  }
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardHeader}>
@@ -153,11 +169,23 @@ function Dashboard() {
                           Delete
                         </button>
                         {blog.isPublished ? (
-                          <button className={styles.btnUnpublish}>
+                          <button
+                            className={styles.btnUnpublish}
+                            onClick={() => {
+                              handleToggleBlogStatus(blog.id, false);
+                            }}
+                          >
                             Unpublish
                           </button>
                         ) : (
-                          <button className={styles.btnPublish}>Publish</button>
+                          <button
+                            className={styles.btnPublish}
+                            onClick={() => {
+                              handleToggleBlogStatus(blog.id, true);
+                            }}
+                          >
+                            Publish
+                          </button>
                         )}
                       </div>
                     </td>

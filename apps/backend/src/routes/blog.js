@@ -7,7 +7,7 @@ const {
   createNewBlog,
   deleteBlog,
   getDraftBlog,
-  convertToDraft,
+  toggleBlogStatus,
 } = require("../controllers/blog");
 const { verifyToken } = require("../controllers/auth");
 
@@ -17,6 +17,7 @@ router.get("/:blogid", getSingleBlog);
 router.put("/:blogid", verifyToken, editBlog);
 router.delete("/:blogid", verifyToken, deleteBlog);
 router.get("/:blogid/draft", verifyToken, getDraftBlog);
+router.put("/:blogid/toggle", verifyToken, toggleBlogStatus);
 router.post("/new", verifyToken, createNewBlog);
 
 module.exports = router;

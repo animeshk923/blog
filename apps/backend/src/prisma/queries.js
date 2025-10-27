@@ -64,6 +64,19 @@ async function deleteBlogById(blogid) {
   });
 }
 
+async function updateBlogStatus(blogid, publishStatus) {
+  await prisma.post.update({
+    where: {
+      id: parseInt(blogid),
+    },
+    data:{
+      isPublished: publishStatus,
+    }
+  });
+}
+
+
+
 module.exports = {
   createUser,
   getUser,
@@ -72,4 +85,6 @@ module.exports = {
   getBlogById,
   updateBlogById,
   deleteBlogById,
+  updateBlogById,
+  updateBlogStatus
 };
