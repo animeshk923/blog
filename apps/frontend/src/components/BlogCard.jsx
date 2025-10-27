@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import styles from "../styles/HighlightBlog.module.css";
+import styles from "../styles/BlogCard.module.css";
 
-export default function HighlightBlog({ image, blog }) {
+export default function BlogCard({ image, blog }) {
   return (
     <>
-      <Link to={`/blogs/dweller`} className={styles.highlightBlog}>
+      <Link to={`/blogs/dweller`} className={styles.BlogCard}>
         <img src={image.src} alt={image.alt} className={styles.img} />
         <div className={styles.info}>
           <p>{blog.timeline}</p>

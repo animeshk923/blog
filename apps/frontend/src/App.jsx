@@ -1,6 +1,6 @@
 import "./App.scss";
 import Header from "./components/Header.jsx";
-import HighlightBlog from "./components/HIghlightBlog.jsx";
+import BlogCard from "./components/BlogCard.jsx";
 function App() {
   return (
     <>
@@ -8,7 +8,7 @@ function App() {
         <Header />
         <hr className="mainPagehr" />
         <div className="content">
-          <HighlightBlog
+          <BlogCard
             image={{
               // TODO: make js file with blog component info as object collection and import here
               src: "/assets/dark-laptop.jpg",
@@ -22,7 +22,7 @@ function App() {
               description: "Well, kind of.",
             }}
           />
-          <HighlightBlog
+          <BlogCard
             image={{
               // TODO: make js file with blog component info as object collection and import here
               src: "/assets/dark-laptop.jpg",
@@ -36,7 +36,7 @@ function App() {
               description: "Well, yeah...",
             }}
           />
-          <HighlightBlog
+          <BlogCard
             image={{
               // TODO: make js file with blog component info as object collection and import here
               src: "/assets/dark-laptop.jpg",
@@ -50,7 +50,7 @@ function App() {
               description: "Well, yeah...",
             }}
           />
-          <HighlightBlog
+          <BlogCard
             image={{
               // TODO: make js file with blog component info as object collection and import here
               src: "/assets/dark-laptop.jpg",

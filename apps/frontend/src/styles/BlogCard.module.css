@@ -1,5 +1,5 @@
 /* Modern blog card design */
-.highlightBlog {
+.BlogCard {
   display: flex;
   gap: 2rem;
   padding: 2rem;
@@ -14,7 +14,7 @@
   overflow: hidden;
 }
 
-.highlightBlog::before {
+.BlogCard::before {
   content: "";
   position: absolute;
   top: 0;
@@ -31,14 +31,14 @@
   transition: opacity 0.3s ease;
 }
 
-.highlightBlog:hover {
+.BlogCard:hover {
   transform: translateY(-4px);
   border-color: rgba(126, 217, 240, 0.2);
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.05);
 }
 
-.highlightBlog:hover::before {
+.BlogCard:hover::before {
   opacity: 1;
 }
 
@@ -51,7 +51,7 @@
   transition: transform 0.3s ease;
 }
 
-.highlightBlog:hover .img {
+.BlogCard:hover .img {
   transform: scale(1.02);
 }
 
@@ -90,7 +90,7 @@
 
 /* Responsive design */
 @media (max-width: 900px) {
-  .highlightBlog {
+  .BlogCard {
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem;
@@ -108,7 +108,7 @@
 }
 
 @media (max-width: 600px) {
-  .highlightBlog {
+  .BlogCard {
     padding: 1.25rem;
     gap: 1.25rem;
   }
