@@ -9,9 +9,7 @@ export default function TextEditor() {
   const navigate = useNavigate();
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState(
-    "<p>Start writing your blog content here...</p>"
-  );
+  const [content, setContent] = useState("Topic?");
   const [blogPublished, setBlogPublished] = useState(null);
   const { blogid } = useParams();
 
@@ -55,11 +53,11 @@ export default function TextEditor() {
     const title = document.querySelector("#titleInput").value.trim();
 
     const userid = await getUserid();
-    console.log(userid);
+    // console.log(userid);
 
     axiosInstance
       .post(
-        `${apiUrl}/blog/new/publish`,
+        `${apiUrl}/blog/new`,
         {
           title,
           content,
@@ -72,6 +70,39 @@ export default function TextEditor() {
       )
       .then((res) => {
         console.log("published successfully:", res);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // TODO: connect this to backend
+  async function handleDraft() {
+    if (!editorRef.current) return;
+    const content = editorRef.current.getContent();
+    const title = document.querySelector("#titleInput").value.trim();
+
+    const userid = await getUserid();
+    console.log(userid);
+
+    // TODO: if blogid exists, update the existing draft instead of creating a new one
+    // TODO: if a published blog is updated and saved as draft, it should change the status of the blog to draft in the database
+    axiosInstance
+      .post(
+        `${apiUrl}/blog/new`,
+        {
+          title,
+          content,
+          publishStatus: false,
+          userId: userid,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        console.log("draft saved successfully:", res);
         navigate("/");
       })
       .catch((err) => {
@@ -102,39 +133,6 @@ export default function TextEditor() {
       )
       .then((res) => {
         console.log("updated successfully:", res);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  // TODO: connect this to backend
-  async function handleDraft() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
-    const title = document.querySelector("#titleInput").value.trim();
-
-    const userid = await getUserid();
-    console.log(userid);
-
-    // TODO: if blogid exists, update the existing draft instead of creating a new one
-    // TODO: if a published blog is updated and saved as draft, it should change the status of the blog to draft in the database
-    axiosInstance
-      .post(
-        `${apiUrl}/blog/new/draft`,
-        {
-          title,
-          content,
-          publishStatus: false,
-          userId: userid,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-      .then((res) => {
-        console.log("draft saved successfully:", res);
         navigate("/");
       })
       .catch((err) => {

@@ -1,6 +1,11 @@
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
-const { storeBlog, queryGetAllBlogs, getBlogById, updateBlogById } = require("../prisma/queries");
+const {
+  storeBlog,
+  queryGetAllBlogs,
+  getBlogById,
+  updateBlogById,
+} = require("../prisma/queries");
 // TODO: implement functionality
 // get all blogs from the database
 
@@ -8,7 +13,7 @@ const { storeBlog, queryGetAllBlogs, getBlogById, updateBlogById } = require("..
 async function getAllBlogs(req, res) {
   try {
     const blogs = await queryGetAllBlogs();
-    console.log("Fetched blogs:", blogs);
+    // console.log("Fetched blogs:", blogs);
     res.json(blogs);
   } catch (err) {
     console.error(err);
@@ -22,7 +27,7 @@ async function getSingleBlog(req, res) {
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
-    res.json(blog);
+    res.status(200).json(blog);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -39,27 +44,27 @@ async function getDraftBlog(req, res) {
 // TODO: implement functionality
 async function editBlog(req, res) {
   // get specific blog from the database
-  const {blogid} = req.params;
-  const {title, content, publishStatus} = req.body;
+  const { blogid } = req.params;
+  const { title, content, publishStatus } = req.body;
 
-  console.log("Editing blog id:", blogid);
-  console.log("New title:", title);
-  console.log("New content:", content);
-  console.log("New publish status:", publishStatus);
+  // console.log("Editing blog id:", blogid);
+  // console.log("New title:", title);
+  // console.log("New content:", content);
+  // console.log("New publish status:", publishStatus);
 
-  await updateBlogById(blogid, sanitizeHtml(title), sanitizeHtml(content), publishStatus);
+  await updateBlogById(
+    blogid,
+    sanitizeHtml(title),
+    sanitizeHtml(content),
+    publishStatus
+  );
   res.status(200).json({ msg: "edit success!", authData: req.authData });
 }
 
 // TODO: use cloudinary in the second iteration to host images for the cover and any image inside the blog itself.
 
 async function createNewBlog(req, res) {
-  const { content, title, publishStatus, userId } = req.body;
-
-  console.log("blog:", content);
-  console.log("title:", title);
-  console.log(publishStatus);
-  console.log(userId);
+  const { title, content, publishStatus, userId } = req.body;
 
   try {
     await storeBlog(
@@ -68,12 +73,10 @@ async function createNewBlog(req, res) {
       publishStatus,
       userId
     );
-    res.status(201).json({ msg: "new blog publish! check DB to verify" });
+    res.status(201).json({ msg: "New blog added! check DB to verify" });
   } catch (err) {
     console.log(err);
-    res
-      .status(400)
-      .json({ msg: "Error publishing blog. Check log for details" });
+    res.status(400).json({ msg: "Error adding blog. Check log for details" });
   }
 }
 
@@ -93,11 +96,9 @@ async function deleteBlog(req, res) {
     res.status(200).json({ msg: "Blog deleted successfully" });
   } catch (err) {
     console.error(err);
-    res
-      .status(500)
-      .json({
-        msg: "Server error while deleting blog. Check log for details.",
-      });
+    res.status(500).json({
+      msg: "Server error while deleting blog. Check log for details.",
+    });
   }
 }
 

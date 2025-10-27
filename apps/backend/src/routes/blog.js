@@ -17,7 +17,6 @@ router.get("/:blogid", getSingleBlog);
 router.put("/:blogid", verifyToken, editBlog);
 router.delete("/:blogid", verifyToken, deleteBlog);
 router.get("/:blogid/draft", verifyToken, getDraftBlog);
-router.post("/new/publish", verifyToken, createNewBlog);
-router.post("/new/draft", verifyToken, convertToDraft);
+router.post("/new", verifyToken, createNewBlog);
 
 module.exports = router;

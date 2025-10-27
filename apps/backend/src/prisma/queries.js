@@ -15,10 +15,8 @@ async function createUser(name, email, password, isAdmin) {
 async function queryGetAllBlogs() {
   return await prisma.post.findMany({
     orderBy: {
-      time: "desc",
+      id: "desc",
     },
-
-    where: { isPublished: true },
   });
 }
 
@@ -57,11 +55,12 @@ async function updateBlogById(blogid, title, content, publishStatus) {
     },
   });
 }
+
 module.exports = {
   createUser,
   getUser,
   storeBlog,
   queryGetAllBlogs,
   getBlogById,
-  updateBlogById
+  updateBlogById,
 };

@@ -1,6 +1,6 @@
 import styles from "../styles/Dashboard.module.scss";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axiosInstance, { apiUrl } from "../api/axios";
 
 function Dashboard() {
@@ -24,40 +24,29 @@ function Dashboard() {
       }
     }
     fetchBlogs();
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
-  let draftCount = 0;
-  let publishedCount = 0;
-  blogs.map((blog) => {
-    if (blog.isPublished) {
-      publishedCount += 1;
-    } else {
-      draftCount += 1;
-    }
-  });
+  const stats = useMemo(() => {
+    const published = blogs.filter((blog) => blog.isPublished).length;
+    const drafts = blogs.filter((blog) => !blog.isPublished).length;
+
+    return [
+      { label: "Total Blogs", value: blogs.length },
+      { label: "Published", value: published },
+      { label: "Drafts", value: drafts },
+    ];
+  }, [blogs]);
 
   async function handleDelete(blogid) {
     try {
       alert("Delete blog with id: " + blogid);
       await axiosInstance.delete(`${apiUrl}/blog/${blogid}`);
-      // remove the deleted blog from the state
-      // setBlogs(blogs.filter((blog) => blog.id !== blogid));
       window.location.reload();
     } catch (err) {
       console.error("Failed to delete blog:", err);
       alert("Failed to delete blog. Check console for details.");
     }
   }
-  const stats = [
-    // replace icons with actual icons later on
-    { label: "Total Blogs", value: blogs.length },
-    { label: "Published", value: publishedCount },
-    { label: "Drafts", value: draftCount },
-    // { label: "Total Views", value: "2,140"},
-  ];
 
   function handleNewBlog() {}
 
@@ -85,7 +74,7 @@ function Dashboard() {
       {/* Blogs Table */}
       <div className={styles.card}>
         <div className={styles.tableHeader}>
-          <h2 className={styles.tableTitle}>Recent Blogs</h2>
+          <h2 className={styles.tableTitle}>All Blogs</h2>
           <button className={styles.btnPrimary} onClick={handleNewBlog}>
             <Link to={"blog/new"}>+ New Blog</Link>
           </button>
@@ -145,7 +134,7 @@ function Dashboard() {
                     {/* actions column */}
                     <td>
                       <div className={styles.actionButtons}>
-                       <Link to={`blog/edit/${blog.id}`}>
+                        <Link to={`blog/edit/${blog.id}`}>
                           <button className={styles.btnEdit}>Edit</button>
                         </Link>
                         <button
