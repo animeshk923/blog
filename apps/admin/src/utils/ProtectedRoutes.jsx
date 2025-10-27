@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import axiosInstance, { apiUrl } from "../api/axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ProtectedRoutes() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

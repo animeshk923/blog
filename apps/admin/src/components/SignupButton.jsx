@@ -1,5 +1,6 @@
 // import styles from "..styles/Logout.module.scss";
 import styles from "../styles/Logout.module.scss";
+import React from "react";
 
 /**
  * Props:

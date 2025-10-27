@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.scss";
 import App from "./App.jsx";
@@ -7,7 +7,6 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
-import DraftBlogs from "./components/DraftBlogs.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import TextEditor from "./components/TextEditor.jsx";
 
@@ -25,7 +24,6 @@ const router = createBrowserRouter([
             children: [
               { path: "new", element: <TextEditor /> },
               { path: "edit/:blogid", element: <TextEditor /> },
-              { path: "drafts", element: <DraftBlogs /> },
             ],
           },
         ],

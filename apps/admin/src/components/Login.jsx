@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosInstance from "../api/axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from '../styles/Login.module.scss'
 import { Link, useNavigate } from "react-router-dom";
 
