@@ -7,15 +7,23 @@ const {
   updateBlogById,
   deleteBlogById,
   updateBlogStatus,
+  queryAllPublishedBlogs,
 } = require("../prisma/queries");
-// TODO: implement functionality
-// get all blogs from the database
 
-// replace the controller implementation
+// get all blogs from the database
 async function getAllBlogs(req, res) {
   try {
     const blogs = await queryGetAllBlogs();
-    // console.log("Fetched blogs:", blogs);
+    res.json(blogs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+}
+// get all published blogs from the database
+async function getAllPublishedBlogs(req, res) {
+  try {
+    const blogs = await queryAllPublishedBlogs();
     res.json(blogs);
   } catch (err) {
     console.error(err);
@@ -36,23 +44,9 @@ async function getSingleBlog(req, res) {
   }
 }
 
-// TODO: implement functionality
-async function getDraftBlog(req, res) {
-  // get draft blog from the database
-
-  res.json({ msg: "edit draft blog?" });
-}
-
-// TODO: implement functionality
 async function editBlog(req, res) {
-  // get specific blog from the database
   const { blogid } = req.params;
   const { title, content, publishStatus } = req.body;
-
-  // console.log("Editing blog id:", blogid);
-  // console.log("New title:", title);
-  // console.log("New content:", content);
-  // console.log("New publish status:", publishStatus);
 
   await updateBlogById(
     blogid,
@@ -82,7 +76,6 @@ async function createNewBlog(req, res) {
   }
 }
 
-// TODO: implement functionality
 async function toggleBlogStatus(req, res) {
   // get specific blog from the database
   const { blogid } = req.params;
@@ -98,7 +91,6 @@ async function toggleBlogStatus(req, res) {
   }
 }
 
-// TODO: implement functionality
 async function deleteBlog(req, res) {
   // get specific blog from the database
   try {
@@ -117,9 +109,9 @@ async function deleteBlog(req, res) {
 module.exports = {
   getAllBlogs,
   getSingleBlog,
-  getDraftBlog,
   editBlog,
   createNewBlog,
   deleteBlog,
   toggleBlogStatus,
+  getAllPublishedBlogs,
 };

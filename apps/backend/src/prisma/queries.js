@@ -20,6 +20,17 @@ async function queryGetAllBlogs() {
   });
 }
 
+async function queryAllPublishedBlogs() {
+  return await prisma.post.findMany({
+    orderBy: {
+      id: "desc",
+    },
+    where: {
+      isPublished: true,
+    },
+  });
+}
+
 async function getUser(email) {
   return await prisma.user.findUnique({ where: { email: email } });
 }
@@ -69,13 +80,11 @@ async function updateBlogStatus(blogid, publishStatus) {
     where: {
       id: parseInt(blogid),
     },
-    data:{
+    data: {
       isPublished: publishStatus,
-    }
+    },
   });
 }
-
-
 
 module.exports = {
   createUser,
@@ -86,5 +95,6 @@ module.exports = {
   updateBlogById,
   deleteBlogById,
   updateBlogById,
-  updateBlogStatus
+  updateBlogStatus,
+  queryAllPublishedBlogs,
 };
