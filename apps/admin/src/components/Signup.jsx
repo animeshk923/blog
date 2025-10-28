@@ -46,7 +46,7 @@ export default function Signup() {
             <span className={styles.formTitle}>Sign Up</span>
             <input
               type="text"
-              placeholder="fullName"
+              placeholder="Full Name"
               onChange={(e) => setfullName(e.target.value)}
               required
             />
@@ -58,7 +58,7 @@ export default function Signup() {
             />
             <input
               type="password"
-              placeholder="password"
+              placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
