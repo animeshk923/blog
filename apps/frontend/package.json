@@ -12,6 +12,7 @@
   "dependencies": {
     "@tinymce/tinymce-react": "^6.3.0",
     "axios": "^1.12.2",
+    "html-react-parser": "^5.2.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",

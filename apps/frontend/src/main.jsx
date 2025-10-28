@@ -4,7 +4,7 @@ import "./index.scss";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from "./components/About.jsx";
-import BlogPageWrapper from "./components/BlogPageWrapper.jsx";
+import BlogPage from "./components/BlogPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +16,8 @@ const router = createBrowserRouter([
     element: <About />,
   },
   {
-    path: "blogs/:slug",
-    element: <BlogPageWrapper />,
+    path: "blog/:id",
+    element: <BlogPage />,
   },
 ]);
 

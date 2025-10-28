@@ -33,6 +33,62 @@ a:hover {
   max-width: 100%;
 }
 
+/* Loading, Error, and Empty States */
+.loading-state,
+.error-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+.loading-state p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.error-state p {
+  font-size: 1.1rem;
+  color: rgba(255, 100, 100, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.error-state button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.error-state button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* Subtle divider */
 .mainPagehr {
   margin: 2rem auto 0;

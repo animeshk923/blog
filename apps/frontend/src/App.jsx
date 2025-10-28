@@ -25,35 +25,61 @@ function App() {
       }
     }
     fetchBlogs();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
-    // TODO: make js file with blog component info as object collection and import here
     <>
       <div className="mainContainer">
         <Header />
         <hr className="mainPagehr" />
         <div className="content">
-          {blogs.map((blog) => {
-            // console.log(blog);
-            console.log(blog.title);
-            return (
-              <BlogCard
-                key={blog.id}
-                image={{
-                  // TODO: import image src from blog data backend after implementing cloudinary. Extract image link and populate here.
-                  src: "/assets/dark-laptop.jpg",
-                  alt: "highlight blog image",
-                }}
-                blog={{
-                  // TODO: dynamically render blog information from api call
-                  // Change component to achieve it
-                  timeline: "Oct, 2025",
-                  heading: blog.title,
-                }}
-              />
-            );
-          })}
+          {loading && (
+            <div className="loading-state">
+              <p>Loading blogs...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="error-state">
+              <p>Failed to load blogs. Please try again later.</p>
+              <button onClick={() => window.location.reload()}>Retry</button>
+            </div>
+          )}
+
+          {!loading && !error && blogs.length === 0 && (
+            <div className="empty-state">
+              <p>No published blogs yet. Check back soon!</p>
+            </div>
+          )}
+
+          {!loading &&
+            !error &&
+            blogs.length > 0 &&
+            blogs.map((blog) => {
+              return (
+                <BlogCard
+                  key={blog.id}
+                  blogid={blog.id}
+                  image={{
+                    // TODO: import image src from blog data backend after implementing cloudinary. Extract image link and populate here.
+                    src: blog.image || "/assets/dark-laptop.jpg",
+                    alt: blog.imageAlt || "highlight blog image",
+                  }}
+                  blog={{
+                    timeline: blog.time
+                      ? new Date(blog.time).toLocaleDateString("en-US", {
+                          month: "short",
+                          year: "numeric",
+                        })
+                      : "Recent",
+                    heading: blog.title,
+                  }}
+                />
+              );
+            })}
         </div>
       </div>
     </>
