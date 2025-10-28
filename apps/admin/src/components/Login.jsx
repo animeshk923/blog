@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosInstance from "../api/axios";
 import React, { useEffect, useState } from "react";
-import styles from '../styles/Login.module.scss'
+import styles from "../styles/Login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -82,7 +82,7 @@ export default function Login() {
       ) : (
         <>
           {/* add error message display properly, not rendering as of now */}
-          <h3>{loginError}</h3>
+          <h3 className={styles.h3}>{loginError}</h3>
           <div className={styles.login}>
             <form onSubmit={handleSubmit}>
               <span className={styles.formTitle}>Login</span>
