@@ -82,7 +82,7 @@ export default function Login() {
       ) : (
         <>
           {/* add error message display properly, not rendering as of now */}
-          <h3 className={styles.h3}>{loginError}</h3>
+          <h3 className={`${styles.h3} ${styles.errorMsg}`}>{loginError}</h3>
           <div className={styles.login}>
             <form onSubmit={handleSubmit}>
               <span className={styles.formTitle}>Login</span>
