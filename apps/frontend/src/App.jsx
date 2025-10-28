@@ -1,7 +1,7 @@
 import "./App.scss";
 import Header from "./components/Header.jsx";
 import BlogCard from "./components/BlogCard.jsx";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosInstance, { apiUrl } from "../../admin/src/api/axios.js";
 function App() {
   const [blogs, setBlogs] = useState([]);
