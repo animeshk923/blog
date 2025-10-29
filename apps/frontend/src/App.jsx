@@ -65,7 +65,7 @@ function App() {
                   blogid={blog.id}
                   image={{
                     // TODO: import image src from blog data backend after integrating with cloudflare R2. Extract image link and populate here.
-                    src: blog.image || "../public/assets/dark-laptop.jpg",
+                    src: blog.image || "/assets/dark-laptop.jpg",
                     alt: blog.imageAlt || "blog image",
                   }}
                   blog={{
