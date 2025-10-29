@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styles from "../styles/BlogPage.module.css";
-import axiosInstance, { apiUrl } from "../../../admin/src/api/axios";
+import axiosInstance, { apiUrl } from "../api/axios";
 import { useParams } from "react-router-dom";
 import htmlParser from "html-react-parser";
 
