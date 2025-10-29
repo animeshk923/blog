@@ -64,9 +64,9 @@ function App() {
                   key={blog.id}
                   blogid={blog.id}
                   image={{
-                    // TODO: import image src from blog data backend after implementing cloudinary. Extract image link and populate here.
-                    src: blog.image || "/assets/dark-laptop.jpg",
-                    alt: blog.imageAlt || "highlight blog image",
+                    // TODO: import image src from blog data backend after integrating with cloudflare R2. Extract image link and populate here.
+                    src: blog.image || "../public/assets/dark-laptop.jpg",
+                    alt: blog.imageAlt || "blog image",
                   }}
                   blog={{
                     timeline: blog.time

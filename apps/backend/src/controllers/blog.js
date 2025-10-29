@@ -57,7 +57,7 @@ async function editBlog(req, res) {
   res.status(200).json({ msg: "edit success!", authData: req.authData });
 }
 
-// TODO: use cloudinary in the second iteration to host images for the cover and any image inside the blog itself.
+// TODO: use cloudflare R2 in the second iteration to host images for the cover and any image inside the blog itself.
 
 async function createNewBlog(req, res) {
   const { title, content, publishStatus, userId } = req.body;

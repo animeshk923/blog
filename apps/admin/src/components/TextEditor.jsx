@@ -77,7 +77,6 @@ export default function TextEditor() {
       });
   }
 
-  // TODO: connect this to backend
   async function handleDraft() {
     if (!editorRef.current) return;
     const content = editorRef.current.getContent();
