@@ -75,8 +75,7 @@ export default function Header() {
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <Link
-            to={`http://localhost:5173`}
-            // to={`https://animeshk923.vercel.app`}
+            to={`https://animeshk923.vercel.app`}
             target="_blank"
             className={styles.mobileLink}
             onClick={() => setIsMobileMenuOpen(false)}
