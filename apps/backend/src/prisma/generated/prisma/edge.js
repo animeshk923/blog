@@ -177,16 +177,17 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "LOCAL_DATABASE_URL",
+        "fromEnvVar": "PROD_DATABASE_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"LOCAL_DATABASE_URL\")\n  // url      = env(\"PROD_DATABASE_URL\")\n}\n\n/// Blog user model\nmodel User {\n  id       Int     @id @default(autoincrement())\n  fullName String\n  email    String  @unique\n  password String\n  isAdmin  Boolean @default(false)\n  posts    Post[]\n}\n\nmodel Post {\n  id          Int       @id @default(autoincrement())\n  title       String\n  body        String\n  time        DateTime  @default(now()) @db.Date\n  isPublished Boolean\n  userId      Int\n  User        User      @relation(fields: [userId], references: [id])\n  Comment     Comment[]\n}\n\nmodel Comment {\n  id       Int      @id @default(autoincrement())\n  content  String\n  time     DateTime\n  email    String   @unique\n  username String?  @unique\n  post     Post     @relation(fields: [postId], references: [id])\n  postId   Int\n}\n",
-  "inlineSchemaHash": "bd74fca818a0862f72293a89422602775b6ae239a28241d132766700550703ee",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  // url      = env(\"LOCAL_DATABASE_URL\")\n  url      = env(\"PROD_DATABASE_URL\")\n}\n\n/// Blog user model\nmodel User {\n  id       Int     @id @default(autoincrement())\n  fullName String\n  email    String  @unique\n  password String\n  isAdmin  Boolean @default(false)\n  posts    Post[]\n}\n\nmodel Post {\n  id          Int       @id @default(autoincrement())\n  title       String\n  body        String\n  time        DateTime  @default(now()) @db.Date\n  isPublished Boolean\n  userId      Int\n  User        User      @relation(fields: [userId], references: [id])\n  Comment     Comment[]\n}\n\nmodel Comment {\n  id       Int      @id @default(autoincrement())\n  content  String\n  time     DateTime\n  email    String   @unique\n  username String?  @unique\n  post     Post     @relation(fields: [postId], references: [id])\n  postId   Int\n}\n",
+  "inlineSchemaHash": "559385ed2fbd9b528eefe28c666c49feeb92a35f43c25e0a74bb1d4cacbcb13a",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -198,7 +199,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    LOCAL_DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['LOCAL_DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.LOCAL_DATABASE_URL || undefined
+    PROD_DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['PROD_DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.PROD_DATABASE_URL || undefined
   }
 })
 
