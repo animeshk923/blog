@@ -1,7 +1,8 @@
 import axios from "axios";
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import styles from "../styles/Login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { apiUrl } from "../api/axios";
 export default function Signup() {
   const [userExists, setUserExists] = useState(false);
   const [fullName, setfullName] = useState("");
@@ -13,7 +14,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/auth/signup", {
+      await axios.post(`${apiUrl}/auth/signup`, {
         fullName,
         email,
         password,

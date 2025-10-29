@@ -1,5 +1,6 @@
+
 import axios from "axios";
-import axiosInstance from "../api/axios";
+import axiosInstance, { apiUrl } from "../api/axios";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,13 +15,14 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3000/auth/login`, {
+      const response = await axios.post(`${apiUrl}/auth/login`, {
         email,
         password,
       });
 
       const token = response?.data?.token;
       const user = response?.data?.user;
+      
 
       if (token) {
         localStorage.setItem("token", response.data.token);
@@ -37,7 +39,9 @@ export default function Login() {
 
   async function fetchCurrentUser() {
     try {
-      const res = await axiosInstance.get("/auth/me");
+      const res = await axiosInstance.get(`${apiUrl}/auth/me`);
+      console.log(res);
+      
       return res.data || null;
     } catch (err) {
       console.log(err);
