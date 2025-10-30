@@ -25,8 +25,9 @@ export default function BlogPage() {
       <div className={styles.container}>
         <Header />
         <hr className={styles.hr} />
-        <div className={styles.post} />
-        {blogContent && htmlParser(blogContent)}
+        <div className={styles.post}>
+          {blogContent && htmlParser(blogContent)}
+        </div>
       </div>
     </>
   );
