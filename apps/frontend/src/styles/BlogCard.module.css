@@ -91,15 +91,14 @@
 /* Responsive design */
 @media (max-width: 900px) {
   .BlogCard {
-    flex-direction: column;
-    gap: 1.5rem;
+    /* flex-direction: column;
+    gap: 1.5rem; */
     padding: 1.5rem;
   }
 
   .img {
-    width: 100%;
-    height: 200px;
-    max-width: none;
+    /* width: 100%; */
+    /* height: 200px; */
   }
 
   .h1 {
