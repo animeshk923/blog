@@ -37,7 +37,7 @@
 
 @media (max-width: 900px) {
   .header {
-    padding: 1.5rem 0;
+    padding: 2rem 2rem;
 
     & a:first-child {
       font-size: 1.3rem;

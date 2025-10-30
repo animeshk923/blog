@@ -4,8 +4,8 @@ import Header from "./Header";
 export default function About() {
   return (
     <>
+      <Header />
       <div className={styles.aboutContent}>
-        <Header />
         <div className={styles.aboutSection}>
           <img
             className={`headshotImg ${styles.img}`}
@@ -13,8 +13,10 @@ export default function About() {
             alt="headshot image of mine"
           />
           <div className={styles.description}>
-            <p className={styles.p}>An avid open source dweller who writes sometimes</p>
-            <hr className={styles.hr}/>
+            <p className={styles.p}>
+              An avid open source dweller who writes sometimes
+            </p>
+            <hr className={styles.hr} />
             <div className={styles.links}>
               <a
                 href="https://x.com/animeshk923"
