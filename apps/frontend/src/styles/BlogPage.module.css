@@ -85,9 +85,26 @@
     margin-top: 1rem;
 
     .post {
-      margin-left: 3rem;
+      margin-left: 0rem;
       margin-bottom: 2rem;
       padding: 0 0.5rem;
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      ul {
+        line-height: 2rem;
+      }
+
+      p {
+        font-size: 1.05rem;
+        line-height: 1.8rem;
+      }
     }
   }
 }
