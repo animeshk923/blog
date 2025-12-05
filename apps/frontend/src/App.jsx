@@ -15,7 +15,12 @@ function App() {
       setError(null);
       try {
         const res = await axiosInstance.get(`${apiUrl}/blog/published`);
-        if (!cancelled) setBlogs(res.data || []);
+        if (!cancelled) {
+          const sortedBlogs = (res.data || []).sort(
+            (a, b) => new Date(b.time) - new Date(a.time)
+          );
+          setBlogs(sortedBlogs);
+        }
       } catch (err) {
         console.error("Failed to load blogs:", err);
         if (!cancelled) setError(err);
