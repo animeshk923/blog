@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { useAdmin } from "../context/AdminContext";
 import axiosInstance from "../api/axios";
 import styles from "../styles/Header.module.scss";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import SignupButton from "./SignupButton";
+
+const publicUrl = import.meta.env.VITE_PUBLIC_URL;
 
 export default function Header() {
   const { isAdmin, loading } = useAdmin();
@@ -38,11 +40,7 @@ export default function Header() {
 
       {/* Desktop Navigation */}
       <nav className={styles.desktopNav}>
-        <Link
-          to={`http://localhost:5173`}
-          target="_blank"
-          className={styles.navLink}
-        >
+        <Link to={publicUrl} target="_blank" className={styles.navLink}>
           Public Site
         </Link>
         {loading ? null : isAdmin ? (
@@ -75,7 +73,7 @@ export default function Header() {
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <Link
-            to={`https://animeshk923.vercel.app`}
+            to={publicUrl}
             target="_blank"
             className={styles.mobileLink}
             onClick={() => setIsMobileMenuOpen(false)}

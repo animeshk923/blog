@@ -4,6 +4,7 @@ import styles from "../styles/TextEditor.module.scss";
 import axiosInstance, { apiUrl } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import LexicalEditor from "./LexicalEditor";
 
 export default function TextEditor() {
   const navigate = useNavigate();
@@ -170,7 +171,7 @@ export default function TextEditor() {
       <div className={styles.editorSection}>
         <label className={styles.editorLabel}>Content</label>
         <div className={styles.editorWrapper}>
-          <Editor
+          {/* <Editor
             apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
             onInit={(evt, editor) => (editorRef.current = editor)}
             // value={content}
@@ -208,7 +209,8 @@ export default function TextEditor() {
               skin: "oxide-dark",
               content_css: "dark",
             }}
-          />
+          /> */}
+          <LexicalEditor />
         </div>
       </div>
 
