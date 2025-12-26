@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/TextEditor.module.scss";
 import axiosInstance, { apiUrl } from "../api/axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,6 @@ import LexicalEditor from "./LexicalEditor";
 
 export default function TextEditor() {
   const navigate = useNavigate();
-  const editorRef = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("Topic?");
   const [blogPublished, setBlogPublished] = useState(null);
@@ -49,19 +47,17 @@ export default function TextEditor() {
   };
 
   async function handlePublish() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
+    const htmlContent = content;
     const title = document.querySelector("#titleInput").value.trim();
 
     const userid = await getUserid();
-    // console.log(userid);
 
     axiosInstance
       .post(
         `${apiUrl}/blog/new`,
         {
           title,
-          content,
+          content: htmlContent,
           publishStatus: true,
           userId: userid,
         },
@@ -79,21 +75,17 @@ export default function TextEditor() {
   }
 
   async function handleDraft() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
+    const htmlContent = content;
     const title = document.querySelector("#titleInput").value.trim();
 
     const userid = await getUserid();
-    console.log(userid);
 
-    // TODO: if blogid exists, update the existing draft instead of creating a new one
-    // TODO: if a published blog is updated and saved as draft, it should change the status of the blog to draft in the database
     axiosInstance
       .post(
         `${apiUrl}/blog/new`,
         {
           title,
-          content,
+          content: htmlContent,
           publishStatus: false,
           userId: userid,
         },
@@ -111,19 +103,17 @@ export default function TextEditor() {
   }
 
   async function handleSaveChanges() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
+    const htmlContent = content;
     const title = document.querySelector("#titleInput").value.trim();
 
     const userid = await getUserid();
-    console.log(userid);
 
     axiosInstance
       .put(
         `${apiUrl}/blog/${blogid}`,
         {
           title,
-          content,
+          content: htmlContent,
           publishStatus: true,
           userId: userid,
         },
@@ -210,7 +200,7 @@ export default function TextEditor() {
               content_css: "dark",
             }}
           /> */}
-          <LexicalEditor />
+          <LexicalEditor onChange={setContent} initialValue={content} />
         </div>
       </div>
 

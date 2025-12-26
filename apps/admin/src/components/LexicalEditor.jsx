@@ -11,6 +11,7 @@ import {
   UNDO_COMMAND,
   $createParagraphNode,
   $isRangeSelection,
+  $isElementNode,
 } from "lexical";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -20,7 +21,11 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { ListNode, ListItemNode } from "@lexical/list";
-import { CodeNode, CodeHighlightNode } from "@lexical/code";
+import {
+  CodeNode,
+  CodeHighlightNode,
+  registerCodeHighlighting,
+} from "@lexical/code";
 import { LinkNode, AutoLinkNode } from "@lexical/link";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
@@ -28,6 +33,16 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
+import Prism from "prismjs";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-tsx";
+import "prismjs/components/prism-bash";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-markup";
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -43,6 +58,7 @@ import { $createCodeNode } from "@lexical/code";
 import { $setBlocksType } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
 import { TRANSFORMERS } from "@lexical/markdown";
+import CodeLanguageSelector from "./CodeLanguageSelector";
 
 import styles from "../styles/LexicalEditor.module.scss";
 
@@ -71,21 +87,56 @@ const theme = {
   },
 };
 
-const initialConfig = {
-  namespace: "BlogEditor",
-  theme,
-  nodes: [
-    HeadingNode,
-    QuoteNode,
-    ListNode,
-    ListItemNode,
-    CodeNode,
-    CodeHighlightNode,
-    LinkNode,
-    AutoLinkNode,
-  ],
-  onError: (error) => console.error(error),
-};
+function buildInitialConfig(initialValue) {
+  return {
+    namespace: "BlogEditor",
+    theme,
+    nodes: [
+      HeadingNode,
+      QuoteNode,
+      ListNode,
+      ListItemNode,
+      CodeNode,
+      CodeHighlightNode,
+      LinkNode,
+      AutoLinkNode,
+    ],
+    onError: (error) => console.error(error),
+    editorState: initialValue
+      ? (editor) => {
+          editor.update(() => {
+            const dom = new DOMParser().parseFromString(
+              initialValue,
+              "text/html"
+            );
+            const nodes = $generateNodesFromDOM(editor, dom);
+            const root = $getRoot();
+            root.clear();
+            nodes.forEach((node) => {
+              if ($isElementNode(node)) {
+                root.append(node);
+              } else {
+                const paragraph = $createParagraphNode();
+                paragraph.append(node);
+                root.append(paragraph);
+              }
+            });
+          });
+        }
+      : undefined,
+  };
+}
+
+function PrismCodeHighlightPlugin() {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    // Register Prism-based highlighting for code blocks
+    return registerCodeHighlighting(editor, Prism);
+  }, [editor]);
+
+  return null;
+}
 
 function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -100,36 +151,29 @@ function ToolbarPlugin() {
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
-    if ($isRangeSelection(selection)) {
-      setIsBold(selection.hasFormat("bold"));
-      setIsItalic(selection.hasFormat("italic"));
-      setIsUnderline(selection.hasFormat("underline"));
-      setIsStrikethrough(selection.hasFormat("strikethrough"));
-      setIsCode(selection.hasFormat("code"));
+    if (!$isRangeSelection(selection)) return;
 
-      const anchorNode = selection.anchor.getNode();
-      const element =
-        anchorNode.getKey() === "root"
-          ? anchorNode
-          : anchorNode.getTopLevelElementOrThrow();
+    // Update text format states
+    setIsBold(selection.hasFormat("bold"));
+    setIsItalic(selection.hasFormat("italic"));
+    setIsUnderline(selection.hasFormat("underline"));
+    setIsStrikethrough(selection.hasFormat("strikethrough"));
+    setIsCode(selection.hasFormat("code"));
 
-      const elementKey = element.getKey();
-      const elementDOM = editor.getElementByKey(elementKey);
+    // Update block type
+    const anchorNode = selection.anchor.getNode();
+    const element =
+      anchorNode.getKey() === "root"
+        ? anchorNode
+        : anchorNode.getTopLevelElementOrThrow();
 
-      if (elementDOM !== null) {
-        if ($isListNode(element)) {
-          const parentList = $getNearestNodeOfType(anchorNode, ListNode);
-          const type = parentList
-            ? parentList.getListType()
-            : element.getListType();
-          setBlockType(type === "number" ? "ol" : "ul");
-        } else {
-          const type = $isHeadingNode(element)
-            ? element.getTag()
-            : element.getType();
-          setBlockType(type);
-        }
-      }
+    if ($isListNode(element)) {
+      const type = element.getListType();
+      setBlockType(type === "number" ? "ol" : "ul");
+    } else {
+      setBlockType(
+        $isHeadingNode(element) ? element.getTag() : element.getType()
+      );
     }
   }, [editor]);
 
@@ -167,62 +211,30 @@ function ToolbarPlugin() {
     );
   }, [editor, updateToolbar]);
 
-  const formatParagraph = () => {
+  const formatBlock = (type) => {
     editor.update(() => {
-      const selection = getSelection();
-      if ($isRangeSelection(selection)) {
+      const selection = $getSelection();
+      if (!$isRangeSelection(selection)) return;
+
+      if (type === "paragraph") {
         $setBlocksType(selection, () => $createParagraphNode());
+      } else if (type === "quote") {
+        $setBlocksType(selection, () => $createQuoteNode());
+      } else if (type === "code") {
+        $setBlocksType(selection, () => $createCodeNode());
+      } else if (["h1", "h2", "h3", "h4"].includes(type)) {
+        $setBlocksType(selection, () => $createHeadingNode(type));
       }
     });
   };
 
-  const formatHeading = (headingSize) => {
-    if (blockType !== headingSize) {
-      editor.update(() => {
-        const selection = getSelection();
-        if ($isRangeSelection(selection)) {
-          $setBlocksType(selection, () => $createHeadingNode(headingSize));
-        }
-      });
-    }
-  };
-
-  const formatQuote = () => {
-    if (blockType !== "quote") {
-      editor.update(() => {
-        const selection = getSelection();
-        if ($isRangeSelection(selection)) {
-          $setBlocksType(selection, () => $createQuoteNode());
-        }
-      });
-    }
-  };
-
-  const formatCode = () => {
-    if (blockType !== "code") {
-      editor.update(() => {
-        const selection = getSelection();
-        if ($isRangeSelection(selection)) {
-          $setBlocksType(selection, () => $createCodeNode());
-        }
-      });
-    }
-  };
-
-  const formatBulletList = () => {
-    if (blockType !== "ul") {
-      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
-    } else {
-      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
-    }
-  };
-
-  const formatNumberedList = () => {
-    if (blockType !== "ol") {
-      editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
-    } else {
-      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
-    }
+  const toggleList = (listType) => {
+    const isActive = blockType === listType;
+    const command =
+      listType === "ul"
+        ? INSERT_UNORDERED_LIST_COMMAND
+        : INSERT_ORDERED_LIST_COMMAND;
+    editor.dispatchCommand(isActive ? REMOVE_LIST_COMMAND : command, undefined);
   };
 
   return (
@@ -254,28 +266,7 @@ function ToolbarPlugin() {
         <select
           className={styles.toolbarSelect}
           value={blockType}
-          onChange={(e) => {
-            const value = e.target.value;
-            switch (value) {
-              case "paragraph":
-                formatParagraph();
-                break;
-              case "h1":
-              case "h2":
-              case "h3":
-              case "h4":
-                formatHeading(value);
-                break;
-              case "quote":
-                formatQuote();
-                break;
-              case "code":
-                formatCode();
-                break;
-              default:
-                break;
-            }
-          }}
+          onChange={(e) => formatBlock(e.target.value)}
         >
           <option value="paragraph">Normal</option>
           <option value="h1">Heading 1</option>
@@ -291,55 +282,37 @@ function ToolbarPlugin() {
 
       {/* Text Formatting */}
       <div className={styles.toolbarGroup}>
-        <button
-          className={`${styles.toolbarButton} ${isBold ? styles.active : ""}`}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-          }}
-          title="Bold (Ctrl+B)"
-        >
-          <strong>B</strong>
-        </button>
-        <button
-          className={`${styles.toolbarButton} ${isItalic ? styles.active : ""}`}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-          }}
-          title="Italic (Ctrl+I)"
-        >
-          <em>I</em>
-        </button>
-        <button
-          className={`${styles.toolbarButton} ${
-            isUnderline ? styles.active : ""
-          }`}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-          }}
-          title="Underline (Ctrl+U)"
-        >
-          <u>U</u>
-        </button>
-        <button
-          className={`${styles.toolbarButton} ${
-            isStrikethrough ? styles.active : ""
-          }`}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-          }}
-          title="Strikethrough"
-        >
-          <s>S</s>
-        </button>
-        <button
-          className={`${styles.toolbarButton} ${isCode ? styles.active : ""}`}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-          }}
-          title="Inline Code"
-        >
-          {"</>"}
-        </button>
+        {[
+          { format: "bold", label: "B", state: isBold, title: "Bold (Ctrl+B)" },
+          {
+            format: "italic",
+            label: <em>I</em>,
+            state: isItalic,
+            title: "Italic (Ctrl+I)",
+          },
+          {
+            format: "underline",
+            label: <u>U</u>,
+            state: isUnderline,
+            title: "Underline (Ctrl+U)",
+          },
+          {
+            format: "strikethrough",
+            label: <s>S</s>,
+            state: isStrikethrough,
+            title: "Strikethrough",
+          },
+          { format: "code", label: "</>", state: isCode, title: "Inline Code" },
+        ].map(({ format, label, state, title }) => (
+          <button
+            key={format}
+            className={`${styles.toolbarButton} ${state ? styles.active : ""}`}
+            onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
+            title={title}
+          >
+            {typeof label === "string" ? <strong>{label}</strong> : label}
+          </button>
+        ))}
       </div>
 
       <div className={styles.divider} />
@@ -350,7 +323,7 @@ function ToolbarPlugin() {
           className={`${styles.toolbarButton} ${
             blockType === "ul" ? styles.active : ""
           }`}
-          onClick={formatBulletList}
+          onClick={() => toggleList("ul")}
           title="Bullet List"
         >
           ☰
@@ -359,7 +332,7 @@ function ToolbarPlugin() {
           className={`${styles.toolbarButton} ${
             blockType === "ol" ? styles.active : ""
           }`}
-          onClick={formatNumberedList}
+          onClick={() => toggleList("ol")}
           title="Numbered List"
         >
           ≡
@@ -370,42 +343,24 @@ function ToolbarPlugin() {
 
       {/* Text Alignment */}
       <div className={styles.toolbarGroup}>
-        <button
-          className={styles.toolbarButton}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-          }}
-          title="Align Left"
-        >
-          ⇤
-        </button>
-        <button
-          className={styles.toolbarButton}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-          }}
-          title="Align Center"
-        >
-          ⊟
-        </button>
-        <button
-          className={styles.toolbarButton}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-          }}
-          title="Align Right"
-        >
-          ⇥
-        </button>
-        <button
-          className={styles.toolbarButton}
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-          }}
-          title="Justify"
-        >
-          ≣
-        </button>
+        {["left", "center", "right", "justify"].map((align) => (
+          <button
+            key={align}
+            className={styles.toolbarButton}
+            onClick={() =>
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, align)
+            }
+            title={`Align ${align.charAt(0).toUpperCase() + align.slice(1)}`}
+          >
+            {align === "left"
+              ? "⇤"
+              : align === "center"
+              ? "⊟"
+              : align === "right"
+              ? "⇥"
+              : "≣"}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -421,20 +376,18 @@ function Placeholder() {
 
 export default function LexicalEditor({ onChange, initialValue }) {
   const handleChange = (editorState, editor) => {
-    if (onChange) {
-      editor.update(() => {
-        const root = $getRoot();
-        const htmlString = root.getTextContent();
-        onChange(htmlString);
-      });
-    }
+    onChange?.(editor.update(() => $generateHtmlFromNodes(editor)));
   };
 
   return (
     <div className={styles.lexicalEditorContainer}>
-      <LexicalComposer initialConfig={initialConfig}>
+      <LexicalComposer initialConfig={buildInitialConfig(initialValue)}>
         <ToolbarPlugin />
-        <div className={styles.editorContainer}>
+        <div
+          className={styles.editorContainer}
+          style={{ position: "relative" }}
+        >
+          <CodeLanguageSelector />
           <RichTextPlugin
             contentEditable={<ContentEditable className={styles.editorInput} />}
             placeholder={<Placeholder />}
@@ -446,6 +399,7 @@ export default function LexicalEditor({ onChange, initialValue }) {
           <LinkPlugin />
           <TabIndentationPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <PrismCodeHighlightPlugin />
           <OnChangePlugin onChange={handleChange} />
         </div>
       </LexicalComposer>

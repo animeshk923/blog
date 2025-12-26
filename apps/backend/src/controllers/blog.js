@@ -44,6 +44,27 @@ async function getSingleBlog(req, res) {
   }
 }
 
+// Sanitize options to preserve Prism-compatible code blocks
+const sanitizeOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "pre",
+    "code",
+    "img",
+  ]),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    a: ["href", "name", "target", "rel"],
+    img: ["src", "alt"],
+    code: ["class"],
+    pre: ["class"],
+  },
+  allowedSchemes: ["http", "https", "mailto", "data"],
+};
+
 async function editBlog(req, res) {
   const { blogid } = req.params;
   const { title, content, publishStatus } = req.body;
@@ -51,7 +72,8 @@ async function editBlog(req, res) {
   await updateBlogById(
     blogid,
     sanitizeHtml(title),
-    sanitizeHtml(content),
+    // Preserve code fences with language classes for Prism
+    sanitizeHtml(content, sanitizeOptions),
     publishStatus
   );
   res.status(200).json({ msg: "edit success!", authData: req.authData });
@@ -65,7 +87,8 @@ async function createNewBlog(req, res) {
   try {
     await storeBlog(
       sanitizeHtml(title),
-      sanitizeHtml(content),
+      // Preserve Prism-compatible classes
+      sanitizeHtml(content, sanitizeOptions),
       publishStatus,
       userId
     );
