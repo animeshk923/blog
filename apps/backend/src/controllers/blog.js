@@ -1,5 +1,14 @@
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
+// Allow class attribute on code/pre to preserve language hints for client-side highlighting
+const sanitizeOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags,
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    code: ["class"],
+    pre: ["class"],
+  },
+};
 const {
   storeBlog,
   queryGetAllBlogs,
@@ -51,7 +60,7 @@ async function editBlog(req, res) {
   await updateBlogById(
     blogid,
     sanitizeHtml(title),
-    sanitizeHtml(content),
+    sanitizeHtml(content, sanitizeOptions),
     publishStatus
   );
   res.status(200).json({ msg: "edit success!", authData: req.authData });
@@ -65,7 +74,7 @@ async function createNewBlog(req, res) {
   try {
     await storeBlog(
       sanitizeHtml(title),
-      sanitizeHtml(content),
+      sanitizeHtml(content, sanitizeOptions),
       publishStatus,
       userId
     );
