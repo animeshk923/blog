@@ -11,12 +11,16 @@
   },
   "dependencies": {
     "@tinymce/tinymce-react": "^6.3.0",
+    "@uiw/react-markdown-preview": "^5.1.5",
+    "@uiw/react-md-editor": "^4.0.11",
     "axios": "^1.12.2",
+    "marked": "^17.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.2",
-    "sass": "^1.93.2"
+    "sass": "^1.93.2",
+    "turndown": "^7.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

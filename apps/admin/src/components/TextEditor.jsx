@@ -1,17 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import MDEditor from "@uiw/react-md-editor";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 import styles from "../styles/TextEditor.module.scss";
 import axiosInstance, { apiUrl } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { marked } from "marked";
+import TurndownService from "turndown";
 
 export default function TextEditor() {
   const navigate = useNavigate();
-  const editorRef = useRef(null);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("Topic?");
+  const [content, setContent] = useState("# Topic?");
   const [blogPublished, setBlogPublished] = useState(null);
   const { blogid } = useParams();
+  const turndownRef = useRef(new TurndownService());
 
   useEffect(() => {
     if (!blogid) return;
@@ -22,7 +26,9 @@ export default function TextEditor() {
         const { title, body, isPublished } = res.data;
 
         setTitle(title);
-        setContent(body);
+        // Convert existing HTML body to Markdown for editing
+        const md = turndownRef.current.turndown(body || "");
+        setContent(md || "");
         setBlogPublished(isPublished);
       } catch (err) {
         console.error("Failed to fetch blog:", err);
@@ -48,9 +54,8 @@ export default function TextEditor() {
   };
 
   async function handlePublish() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
     const title = document.querySelector("#titleInput").value.trim();
+    const html = marked.parse(content || "");
 
     const userid = await getUserid();
     // console.log(userid);
@@ -60,7 +65,7 @@ export default function TextEditor() {
         `${apiUrl}/blog/new`,
         {
           title,
-          content,
+          content: html,
           publishStatus: true,
           userId: userid,
         },
@@ -78,9 +83,8 @@ export default function TextEditor() {
   }
 
   async function handleDraft() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
     const title = document.querySelector("#titleInput").value.trim();
+    const html = marked.parse(content || "");
 
     const userid = await getUserid();
     console.log(userid);
@@ -92,7 +96,7 @@ export default function TextEditor() {
         `${apiUrl}/blog/new`,
         {
           title,
-          content,
+          content: html,
           publishStatus: false,
           userId: userid,
         },
@@ -110,9 +114,8 @@ export default function TextEditor() {
   }
 
   async function handleSaveChanges() {
-    if (!editorRef.current) return;
-    const content = editorRef.current.getContent();
     const title = document.querySelector("#titleInput").value.trim();
+    const html = marked.parse(content || "");
 
     const userid = await getUserid();
     console.log(userid);
@@ -122,7 +125,7 @@ export default function TextEditor() {
         `${apiUrl}/blog/${blogid}`,
         {
           title,
-          content,
+          content: html,
           publishStatus: true,
           userId: userid,
         },
@@ -170,45 +173,7 @@ export default function TextEditor() {
       <div className={styles.editorSection}>
         <label className={styles.editorLabel}>Content</label>
         <div className={styles.editorWrapper}>
-          <Editor
-            apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-            onInit={(evt, editor) => (editorRef.current = editor)}
-            // value={content}
-            initialValue={content}
-            init={{
-              height: 500,
-              menubar: false,
-              plugins: [
-                "advlist",
-                "autolink",
-                "lists",
-                "link",
-                "image",
-                "charmap",
-                "preview",
-                "anchor",
-                "searchreplace",
-                "visualblocks",
-                "code",
-                "fullscreen",
-                "insertdatetime",
-                "media",
-                "table",
-                "code",
-                "help",
-                "wordcount",
-              ],
-              toolbar:
-                "undo redo | blocks | " +
-                "bold italic forecolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | " +
-                "removeformat | help",
-              content_style:
-                "body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; color: #ffffff; }",
-              skin: "oxide-dark",
-              content_css: "dark",
-            }}
-          />
+          <MDEditor value={content} onChange={setContent} height={500} />
         </div>
       </div>
 
