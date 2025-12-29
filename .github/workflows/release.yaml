@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "22"
           cache: "npm"
 
       # Step 3: Install dependencies
@@ -43,17 +43,14 @@ jobs:
 
       # Step 6: Run semantic-release
       - name: Release
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@v4.1.1
         id: semantic
         with:
-          # Semantic release version
           semantic_version: 21
-          # Extra plugins for enhanced functionality
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/git
             @semantic-release/github
-          # Branches configuration
           branches: |
             [
               '+([0-9])?(.{+([0-9]),x}).x',
@@ -64,10 +61,8 @@ jobs:
               {name: 'alpha', prerelease: true}
             ]
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE }}
 
-      # Step 7: Output release information
       - name: Output release info
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
@@ -75,9 +70,9 @@ jobs:
           echo "Release Published: ${{ steps.semantic.outputs.new_release_published }}"
           echo "Release Notes: ${{ steps.semantic.outputs.new_release_notes }}"
 
-      # Step 8: Deploy (optional - customize based on your needs)
-      - name: Deploy to production
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: npm run deploy --if-present
-        env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+      # using vercel to deploy
+      # - name: Deploy to production
+      #   if: steps.semantic.outputs.new_release_published == 'true'
+      #   run: npm run deploy --if-present
+      #   env:
+      #     DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
