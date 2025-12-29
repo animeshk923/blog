@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     props: post,
   }));
 }
-type Props = CollectionEntry;
+type Props = CollectionEntry<"jotting">;
 
 const posts = (await getCollection("jotting"))
   .filter((post) => !post.data.draft)
@@ -74,7 +74,7 @@ const { Content, headings } = await render(post);
       {
         post.data.tags && post.data.tags?.length > 0 ? (
           <div class="animate flex gap-2 pt-1">
-            {post.data.tags.map((tag) => (
+            {post.data.tags.map((tag: string) => (
               <a
                 href={`/tags/${tag}`}
                 class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"

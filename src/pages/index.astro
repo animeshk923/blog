@@ -12,7 +12,7 @@ const blog = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
 
-const projects: CollectionEntry[] = (await getCollection("projects"))
+const projects: CollectionEntry<"projects">[] = (await getCollection("projects"))
   .filter((project) => !project.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
@@ -26,7 +26,11 @@ const projects: CollectionEntry[] = (await getCollection("projects"))
           <article class="space-y-4">
             <span class="animate delay-250">
               <h1 class="gloria-hallelujah-regular">
-                Writing my thoughts, <a href="/blog" class="gloria-hallelujah-regular">8 bits at a time.</a>
+                <!-- TODO: jot down why 8 bits at a time -->
+                Writing my thoughts, <a
+                  href="/blog"
+                  class="gloria-hallelujah-regular">8 bits at a time.</a
+                >
               </h1>
             </span>
           </article>
