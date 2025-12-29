@@ -2,6 +2,7 @@
   "name": "animeshk923-blog",
   "type": "module",
   "version": "3.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/animeshk923/blog.git"
