@@ -1,3 +1,10 @@
+## [2.2.4](https://github.com/animeshk923/blog/compare/v2.2.3...v2.2.4) (2025-12-29)
+
+
+### Bug Fixes
+
+* add obsidian config ([3d6cb37](https://github.com/animeshk923/blog/commit/3d6cb3767de1978fc23045d0ce56e6ae5c18012f))
+
 ## [2.2.3](https://github.com/animeshk923/blog/compare/v2.2.2...v2.2.3) (2025-12-29)
 
 
