@@ -1,7 +1,7 @@
 {
   "name": "animeshk923-blog",
   "type": "module",
-  "version": "3.0.0",
+  "version": "2.2.0",
   "private": true,
   "repository": {
     "type": "git",
@@ -37,5 +37,4 @@
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14"
   }
-  
 }
