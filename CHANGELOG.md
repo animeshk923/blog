@@ -1,3 +1,11 @@
+## [2.2.3](https://github.com/animeshk923/blog/compare/v2.2.2...v2.2.3) (2025-12-29)
+
+
+### Bug Fixes
+
+* add rel="noopener noreferrer" to external links for security ([bcf4ded](https://github.com/animeshk923/blog/commit/bcf4ded010a9eb9c473a26c359b02725a0993795))
+* add security patches ([849dcd8](https://github.com/animeshk923/blog/commit/849dcd892b90b0783c2b01fdbdbe56f97f8ac8cf))
+
 ## [2.2.2](https://github.com/animeshk923/blog/compare/v2.2.1...v2.2.2) (2025-12-29)
 
 
