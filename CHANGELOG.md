@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/animeshk923/blog/compare/v2.2.1...v2.2.2) (2025-12-29)
+
+
+### Bug Fixes
+
+* missing word ([1155fa4](https://github.com/animeshk923/blog/commit/1155fa4b277d55725f96a628840f527265624cf7))
+
 ## [2.2.1](https://github.com/animeshk923/blog/compare/v2.2.0...v2.2.1) (2025-12-29)
 
 
