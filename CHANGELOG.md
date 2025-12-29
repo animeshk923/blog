@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/animeshk923/blog/compare/v2.2.4...v3.0.0) (2025-12-29)
+
+
+* feat!: migrate from react+vite to astro.build ([9ffead7](https://github.com/animeshk923/blog/commit/9ffead735be57c2e100a75ea8b5026922b44526c))
+
+
+### BREAKING CHANGES
+
+* Complete migration from React+Vite to Astro.build framework. This changes the entire build system and may require environment updates.
+
 ## [2.2.4](https://github.com/animeshk923/blog/compare/v2.2.3...v2.2.4) (2025-12-29)
 
 
