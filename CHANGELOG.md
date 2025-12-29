@@ -1,3 +1,17 @@
+## [2.2.1](https://github.com/animeshk923/blog/compare/v2.2.0...v2.2.1) (2025-12-29)
+
+
+### Bug Fixes
+
+* add jotting page ([553dbb5](https://github.com/animeshk923/blog/commit/553dbb510a39a6e2ebccc5e84f44bdb92119b124))
+* add missing type annotations ([0946a1c](https://github.com/animeshk923/blog/commit/0946a1c5cf546e949b601b2e0d4ff256034b1992))
+* add unused imports ([abc5fef](https://github.com/animeshk923/blog/commit/abc5fef4b5499bec2c09234a91355570c1e4ec3a))
+* alter template, remove/add icons,, ([0baadfa](https://github.com/animeshk923/blog/commit/0baadfa367cd40a0ff13bfed3987d18399bde69b))
+* bump packages ([fa3237b](https://github.com/animeshk923/blog/commit/fa3237b410a675eba7d565f507f9ff5bac96c26c))
+* delete non-essential folder ([fe6a323](https://github.com/animeshk923/blog/commit/fe6a32375c24a6c61a608bc7da55115f99da9524))
+* modify fonts and remove template texts ([54a6abf](https://github.com/animeshk923/blog/commit/54a6abfc9174627c54e5479671fc40efcca06126))
+* remove template texts ([f331b15](https://github.com/animeshk923/blog/commit/f331b152263c385140176275791f9f29c81dd92b))
+
 # [2.2.0](https://github.com/animeshk923/blog/compare/v2.1.0...v2.2.0) (2025-12-29)
 
 
