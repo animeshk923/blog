@@ -1,3 +1,10 @@
+## [3.0.6](https://github.com/animeshk923/blog/compare/v3.0.5...v3.0.6) (2025-12-30)
+
+
+### Bug Fixes
+
+* edit metadata ([83e247d](https://github.com/animeshk923/blog/commit/83e247da571ce52f3ec3f866ea15d9752cd47c53))
+
 ## [3.0.5](https://github.com/animeshk923/blog/compare/v3.0.4...v3.0.5) (2025-12-30)
 
 
