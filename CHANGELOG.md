@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/animeshk923/blog/compare/v3.4.0...v3.4.1) (2025-12-30)
+
+
+### Bug Fixes
+
+* move analytics to different location ([0898012](https://github.com/animeshk923/blog/commit/0898012a94b9861eca56daf9ae79830b7404a271))
+
 # [3.4.0](https://github.com/animeshk923/blog/compare/v3.3.1...v3.4.0) (2025-12-30)
 
 
