@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/animeshk923/blog/compare/v3.3.1...v3.4.0) (2025-12-30)
+
+
+### Features
+
+* add vercel analytics, local lint setup using biomejs ([83f38e8](https://github.com/animeshk923/blog/commit/83f38e858d29b64871e321ef597bf239c0485856))
+
 ## [3.3.1](https://github.com/animeshk923/blog/compare/v3.3.0...v3.3.1) (2025-12-30)
 
 
