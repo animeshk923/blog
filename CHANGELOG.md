@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/animeshk923/blog/compare/v3.1.0...v3.2.0) (2025-12-30)
+
+
+### Features
+
+* remove lazy loading ([6d2f204](https://github.com/animeshk923/blog/commit/6d2f204773dc490c9df070615498c4901878425e))
+
 # [3.1.0](https://github.com/animeshk923/blog/compare/v3.0.7...v3.1.0) (2025-12-30)
 
 
