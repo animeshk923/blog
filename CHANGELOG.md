@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/animeshk923/blog/compare/v3.0.1...v3.0.2) (2025-12-30)
+
+
+### Bug Fixes
+
+* add blog 2 ([4ac259d](https://github.com/animeshk923/blog/commit/4ac259dfc6963acc3887c1ab2663d43c699af436))
+
 ## [3.0.1](https://github.com/animeshk923/blog/compare/v3.0.0...v3.0.1) (2025-12-30)
 
 
