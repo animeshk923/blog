@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "projects/project-2/index.md",
+                "file": "blog/02-bidirectional-search/index.md",
                 "mode": "preview",
                 "source": false
               },
@@ -195,6 +195,7 @@
   },
   "active": "db78779fe502ba35",
   "lastOpenFiles": [
+    "projects/project-2/index.md",
     "jotting/00-hello/index.md",
     "jotting/00-hello",
     "jotting",
@@ -214,7 +215,6 @@
     "blog/03-projects-collection/index.md",
     "blog/02-blog-collection/index.md",
     "blog/01-getting-started/index.md",
-    "projects/project-2/index.md",
     "projects/project-1/index.md",
     "blog/02-bidirectional-search/index.md"
   ]

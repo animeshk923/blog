@@ -236,8 +236,3 @@ Parallel linear search still performs approx. 500,000 comparisons *(split across
 This remains far slower than binary search’s ~20 comparisons. But we can have other ways to optimise for random, unsorted arrays with some average complexity.
 
 We'll explore it in the upcoming blogs.
-
----
-Implement linear search using two Node.js worker threads searching simultaneously on array halves. Returns as soon as either worker finds the target, or waits for both if not found.
-
-This is a thought experiment to understand:
