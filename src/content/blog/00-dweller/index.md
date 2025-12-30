@@ -1,10 +1,10 @@
 ---
-title: "Becoming an open source dweller"
-description: "Getting started with open source contributions. My journey and tips."
-date: "2025-06-21"
+title: Becoming an open source dweller
+description: Lore about how I got involved in open source software
+date: 2025-06-21
 tags:
   - experience
-  - open source
+  - open-source
 ---
 
 ---
