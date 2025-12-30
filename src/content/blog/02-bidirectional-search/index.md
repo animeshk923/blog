@@ -1,6 +1,6 @@
 ---
 title: Bidirectional Linear Search
-description: How to add projects to your portfolio.
+description: A slightly different approach to linear search
 date: 2025-12-25
 tags:
   - data-structures
