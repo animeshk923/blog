@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/animeshk923/blog/compare/v3.2.0...v3.3.0) (2025-12-30)
+
+
+### Features
+
+* release minor with giscus support ([c932030](https://github.com/animeshk923/blog/commit/c9320307388568f88f24b3c86137e926c7b54b4e))
+
 # [3.2.0](https://github.com/animeshk923/blog/compare/v3.1.0...v3.2.0) (2025-12-30)
 
 
