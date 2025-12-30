@@ -1,79 +1,136 @@
 ---
-title: "Astro Sphere"
-description: "Portfolio and blog build with astro."
-date: "03/18/2024"
-demoURL: "https://astro-sphere-demo.vercel.app"
-repoURL: "https://github.com/markhorn-dev/astro-sphere"
+title: Blog API
+description: Backend API for blog data fetching.
+date: 10/30/2025
+demoURL: https://blog-animesh-kumars-projects-d9d0efa3.vercel.app/
+repoURL: https://github.com/animeshk923/blog/tree/v2.1
 ---
 
-![Astro Sphere](/astro-sphere.jpg)
+## Project Overview
 
-Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on Mark Horn's personal website.
+This project is a modern, full-stack web application designed for creating, managing, and displaying blog content. It follows a monorepo architecture, separating concerns into three distinct applications: a user-facing frontend, an admin panel for managing blogs, and a backend API to serve data to both.
 
-It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
+## Architecture
 
-## 🚀 Deploy your own
+The project is structured as a monorepo, containing three independent applications within the `apps` directory:
 
-<div class="flex gap-2">
-  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere">
-    <img src="/deploy_vercel.svg" />
-  </a>
-  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere">
-    <img src="/deploy_netlify.svg" />
-  </a>
-</div>
+- **`apps/frontend`**: A React-based single-page application (SPA) that serves as the public face of the blog. It fetches and displays published blog posts for readers.
+- **`apps/admin`**: A separate React-based SPA that provides a secure area for administrator(s) to create, edit, and manage blog posts. It includes a rich text editor and authentication.
+- **`apps/backend`**: A Node.js and Express.js application that functions as the central API. It handles business logic, data storage, and authentication for admin application.
 
-## 📋 Features
+## Technology Stack
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-- ✅ Searchable content (posts and projects)
+Built with a modern, robust technology stack to ensure a high-quality scalable, and maintainable application.
 
-## 💯 Lighthouse score
+### Backend (`apps/backend`)
 
-![Astro Sphere Lighthouse Score](/lighthouse-nano.jpg)
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: PostgreSQL _([Schema](apps/backend/src/prisma/schema.prisma))_
+- **Database ORM**: Prisma
+- **Authentication**: Passport.js (with Local and JWT strategies), bcryptjs for password hashing.
+- **API Security**: CORS, sanitize-html for XSS protection.
 
-## 🕊️ Lightweight
+### Frontend (`apps/frontend`)
 
-All pages under 100kb (including fonts)
+- **Framework**: React
+- **Build Tool**: Vite
+- **Routing**: React Router
+- **HTTP Client**: Axios
+- **Styling**: SCSS and CSS Modules
+- **Content Parsing**: `html-react-parser` to render blog content from the backend.
 
-## ⚡︎ Fast
+### Admin Panel (`apps/admin`)
 
-Rendered in ~40ms on localhost
+- **Framework**: React
+- **Build Tool**: Vite
+- **Routing**: React Router
+- **HTTP Client**: Axios
+- **Styling**: SCSS and CSS Modules
+- **Rich Text Editor**: TinyMCE (via `@tinymce/tinymce-react`) for a comprehensive content creation experience.
 
-## 📄 Configuration
+## Features
 
-The blog posts on the demo serve as the documentation and configuration.
+- **Monorepo Architecture**: Centralized code management for streamlined development.
+- **Separation of Concerns**: Distinct frontend, backend, and admin applications.
+- **Secure Authentication**: Robust authentication system for the admin panel using Passport.js.
+- **Content Management**: A full-featured admin dashboard for creating and managing blog posts.
+- **Rich Text Editing**: An advanced text editor for crafting engaging blog content.
+- **RESTful API**: A well-structured backend API to handle all data operations.
+- **Modern Frontend**: A fast and responsive user interface built with React and Vite.
 
-## 💻 Commands
+## Getting Started
 
-All commands are run from the root of the project, from a terminal:
+To run this project locally, you will need to install dependencies and run each application separately.
 
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
+### Prerequisites
 
-| Command                   | Action                                            |
-| :------------------------ | :------------------------------------------------ |
-| `npm install`             | Installs dependencies                             |
-| `npm run dev`             | Starts local dev server at `localhost:4321`       |
-| `npm run sync`            | Generates TypeScript types for all Astro modules. |
-| `npm run build`           | Build your production site to `./dist/`           |
-| `npm run preview`         | Preview your build locally, before deploying      |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`  |
-| `npm run astro -- --help` | Get help using the Astro CLI                      |
-| `npm run lint`            | Run ESLint                                        |
-| `npm run lint:fix`        | Auto-fix ESLint issues                            |
+- Node.js and npm
+- A running PostgreSQL database instance (as configured in [`prisma/schema.prisma`](apps/backend/src/prisma/schema.prisma))
 
-## 🏛️ License
+### Installation
 
-MIT
+1.  **Clone the repository:**
+
+    Use either of the following commands to clone the repository as per your preference:
+
+    #### SSH Method
+
+    ```bash
+    git clone git@github.com:animeshk923/blog.git
+    cd blog
+    ```
+
+    #### HTTPS Method
+
+    ```bash
+    git clone https://github.com/animeshk923/blog.git
+    cd blog
+    ```
+
+2.  **Install backend dependencies:**
+
+    ```bash
+    cd apps/backend
+    npm install
+    ```
+
+3.  **Install frontend dependencies:**
+
+    ```bash
+    cd ../frontend
+    npm install
+    ```
+
+4.  **Install admin dependencies:**
+    ```bash
+    cd ../admin
+    npm install
+    ```
+
+### Running the Application
+
+1.  **Start the backend server:**
+    From the `apps/backend` directory:
+
+    ```bash
+    npm run nodemon
+    ```
+
+    The server will start on the configured port (e.g., `http://localhost:3000`).
+
+2.  **Start the frontend application:**
+    From the `apps/frontend` directory:
+
+    ```bash
+    npm run dev
+    ```
+
+    The frontend will be available at `http://localhost:5173` (or another port if 5173 is in use).
+
+3.  **Start the admin application:**
+    From the `apps/admin` directory:
+    ```bash
+    npm run dev
+    ```
+    The admin panel will be available at a different port (e.g., `http://localhost:5174`).
