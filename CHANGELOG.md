@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/animeshk923/blog/compare/v3.0.7...v3.1.0) (2025-12-30)
+
+
+### Features
+
+* add comment support throught giscus ([6fbb2ec](https://github.com/animeshk923/blog/commit/6fbb2ec4a06e1a8aba2536ce769bda25d1e91ed7))
+
 ## [3.0.7](https://github.com/animeshk923/blog/compare/v3.0.6...v3.0.7) (2025-12-30)
 
 
