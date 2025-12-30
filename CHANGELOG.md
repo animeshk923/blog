@@ -1,3 +1,10 @@
+## [3.4.2](https://github.com/animeshk923/blog/compare/v3.4.1...v3.4.2) (2025-12-30)
+
+
+### Bug Fixes
+
+* move analytics inside <body> tag ([61b656a](https://github.com/animeshk923/blog/commit/61b656a703033e05a9584a10d519ae871f019875))
+
 ## [3.4.1](https://github.com/animeshk923/blog/compare/v3.4.0...v3.4.1) (2025-12-30)
 
 
