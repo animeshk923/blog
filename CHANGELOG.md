@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/animeshk923/blog/compare/v3.0.3...v3.0.4) (2025-12-30)
+
+
+### Bug Fixes
+
+* add projects ([f5c70ec](https://github.com/animeshk923/blog/commit/f5c70ec2df57b29ebee4ee29aef92be17569690d))
+
 ## [3.0.3](https://github.com/animeshk923/blog/compare/v3.0.2...v3.0.3) (2025-12-30)
 
 
