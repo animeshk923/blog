@@ -6,6 +6,7 @@ import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import Analytics from '@vercel/analytics/astro'
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -110,4 +111,5 @@ const projects: CollectionEntry<"projects">[] = (await getCollection("projects")
       </div>
     </aside>
   </Container>
+  <Analytics />
 </Layout>
