@@ -1,3 +1,10 @@
+## [3.4.3](https://github.com/animeshk923/blog/compare/v3.4.2...v3.4.3) (2025-12-31)
+
+
+### Bug Fixes
+
+* add README with project template information ([3bac164](https://github.com/animeshk923/blog/commit/3bac164e0e40ebfdcbd02d428fa1bee4483ce78b))
+
 ## [3.4.2](https://github.com/animeshk923/blog/compare/v3.4.1...v3.4.2) (2025-12-30)
 
 
