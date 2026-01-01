@@ -1,6 +1,6 @@
 ---
 title: 2025 reflections
-des: reflecting back upon how my 2025 went
+description: reflecting back upon how my 2025 went
 date: 2025-12-31
 tags:
   - raw-thoughts
