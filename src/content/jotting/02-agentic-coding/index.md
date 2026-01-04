@@ -14,4 +14,4 @@ i'm seeing people using agents to delegate the 'writing code' part to an llm age
 in my case currently, i'm building up the frontend components. i generate the component template with some initial code and design which i give to the agent and it gives fairly accurate code, about 80% i would say. then i tweak it accordingly.
 
 what i can conclude currently about this whole situation:
-agentic-coding with codebase awareness is the way to gor
+**agentic-coding with codebase awareness is the way to go.**
