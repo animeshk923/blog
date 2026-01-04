@@ -7,7 +7,6 @@ tags:
   - ai
   - experience
 ---
-## agentic-coding
 there are days when i want to go all-in for vibecode, but it feels a bit off to outsource everything to an agent. i'm seeing each day how the way we write software is changing.
 
 i'm seeing people using agents to delegate the 'writing code' part to an llm agent and, apparently, they're pretty good at that. but i often think how many of those are aware of what their code is doing actually?
