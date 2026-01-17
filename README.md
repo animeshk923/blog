@@ -1,3 +1,6 @@
+>[!warning]
+>Due to better design decisions and new customizable framework, I've migrated site to a [SSG architecture](https://developer.mozilla.org/en-US/docs/Glossary/SSG). This version is now only for archival purpose.
+
 # Blog Platform
 
 This repository contains the source code for my personal full-stack blog platform, featuring a public-facing frontend, a secure admin dashboard for content management, and a robust backend API.
