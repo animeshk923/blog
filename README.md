@@ -1,5 +1,5 @@
 >[!warning]
->Due to better design decisions and new customizable framework, I've migrated site to a [SSG architecture](https://developer.mozilla.org/en-US/docs/Glossary/SSG). This version is now only for archival purpose.
+>Due to better design decisions and new customizable framework, I've migrated the site to a [SSG architecture](https://developer.mozilla.org/en-US/docs/Glossary/SSG). This version is now only for archival purpose.
 
 # Blog Platform
 
