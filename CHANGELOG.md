@@ -1,3 +1,15 @@
+# [3.5.0](https://github.com/animeshk923/blog/compare/v3.4.3...v3.5.0) (2026-04-01)
+
+
+### Bug Fixes
+
+* modify github token in yaml ([56dcf3d](https://github.com/animeshk923/blog/commit/56dcf3d2f75039fb5f46252d01e32aed4bf65288))
+
+
+### Features
+
+* add google analytics tracker ([76a4a32](https://github.com/animeshk923/blog/commit/76a4a32ee17167cec114baf5f5d5de818c8b8323))
+
 ## [3.4.3](https://github.com/animeshk923/blog/compare/v3.4.2...v3.4.3) (2025-12-31)
 
 
