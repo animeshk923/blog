@@ -12,6 +12,7 @@ permissions:
   contents: write
   pull-requests: write
   packages: write
+  issues: write
 
 jobs:
   release:
@@ -26,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "22"
+          node-version: "24"
           cache: "npm"
 
       # Step 3: Install dependencies
@@ -61,7 +62,7 @@ jobs:
               {name: 'alpha', prerelease: true}
             ]
         env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUNNER_DEBUG: 1
 
       - name: Output release info
