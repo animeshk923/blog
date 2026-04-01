@@ -1,3 +1,10 @@
+## [3.5.1](https://github.com/animeshk923/blog/compare/v3.5.0...v3.5.1) (2026-04-01)
+
+
+### Bug Fixes
+
+* refine commit message for releases ([0ce393d](https://github.com/animeshk923/blog/commit/0ce393d0b9759b58715d29e77525fa1e35040bd1))
+
 # [3.5.0](https://github.com/animeshk923/blog/compare/v3.4.3...v3.5.0) (2026-04-01)
 
 
