@@ -1,7 +1,7 @@
 ---
 title: Setting up semantic version release in your GitHub repository
 description: Utilising github actions to streamline your ci workflow for semantic versioning and releases.
-date: 2026-04-12
+date: 2026-04-01
 tags:
   - github
   - ci/cd
