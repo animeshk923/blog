@@ -26,7 +26,7 @@ For the four fields that we have, let's assume that they will be taking these mu
 So the total amount of space taken by one particular row = 150 bytes.
 
 The disks that we have on our machine are in contiguous blocks of data.
-Let's assume that each block is of 500 bytes. So how many block will the above table will take? The answer is 750 bytes. _(150\*5 = 750)_
+Let's assume that each block is of 500 bytes. So how many space will the above table will take? The answer is 750 bytes. _(150\*5 = 750)_
 ![block image](/indexing-for-dummies/block-1.png)
 
  The data retrieval process for a row goes like this:
