@@ -70,7 +70,8 @@ So total one row will be taking 40 bytes of data now. And, this whole table will
 If we run the query back to find a particular row from a 100-row table how will that look like?
 > Side note: to search for one query the database engine traverses essentially every single row so it's equal to reading the whole 100 rows to find one row.
 
-Earlier, it was taking 30 seconds to traverse a 30 blocked table and search for that one particular row. How will the process look like now?
+Earlier, it was taking 30 seconds to traverse a table of block-size of 30 to search for that one particular row. How will the process look like now after indexing?
+
 If we have 100 rows of indexed table we will have 100\*40 = 4000 bytes.
 
 1 block = 500 bytes
